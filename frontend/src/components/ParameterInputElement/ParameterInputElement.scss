@@ -1,0 +1,35 @@
+$background-color: #1e1e1e;
+
+.input-container,
+.percent,
+#input-box {
+	background-color: $background-color;
+}
+
+.input-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-basis: 30%;
+}
+
+.percent {
+	position: absolute;
+	display: block;
+	transform: translateY(-50%);
+	top: 49%;
+	right: 15%;
+	pointer-events: none;
+	text-align: center;
+	font-style: normal;
+}
+
+#input-box {
+	font-size: 1rem;
+	padding: 0.35rem 1.2rem 0.35rem 0.1rem;
+	width: 100%;
+	border: 1px solid white;
+	border-radius: 10px;
+	flex-basis: 80%;
+}

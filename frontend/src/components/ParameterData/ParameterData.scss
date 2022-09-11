@@ -1,0 +1,23 @@
+$background-color: #1e1e1e;
+
+#data-container,
+#one-year-data,
+#five-year-data,
+#ten-year-data {
+	background-color: $background-color;
+	display: flex;
+}
+
+#data-container {
+	justify-content: space-evenly;
+	flex-flow: row nowrap;
+	flex-basis: 30%;
+}
+
+#one-year-data,
+#five-year-data,
+#ten-year-data {
+	align-items: center;
+	justify-content: center;
+	flex-basis: calc(100% / 3);
+}

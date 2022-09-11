@@ -1,0 +1,9 @@
+$background-color: #daa520;
+
+#row-header-container {
+	background-color: $background-color;
+	display: flex;
+	justify-content: space-evenly;
+	flex-flow: row wrap;
+	padding: 0.5rem;
+}

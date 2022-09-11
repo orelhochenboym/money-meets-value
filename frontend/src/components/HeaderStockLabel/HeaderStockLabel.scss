@@ -1,0 +1,13 @@
+$input-background-color: #1e1e1e;
+$header-background-color: #daa520;
+
+#stock-label-header-container {
+	flex-basis: 30%;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	padding-left: 0.5rem;
+	align-items: center;
+	background-color: $header-background-color;
+	font-size: 1.8rem;
+}

@@ -1,0 +1,10 @@
+$background-color: #1e1e1e;
+
+#param-row-container {
+	background-color: $background-color;
+	display: flex;
+	justify-content: space-evenly;
+	flex-flow: row nowrap;
+	padding: 0.5rem;
+	border-top: 1px solid white;
+}

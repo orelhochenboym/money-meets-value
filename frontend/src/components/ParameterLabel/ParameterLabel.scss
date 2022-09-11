@@ -1,0 +1,10 @@
+$background-color: #1e1e1e;
+
+#param-label-text {
+	background-color: $background-color;
+	color: white;
+	flex-basis: 30%;
+	text-align: left;
+	padding: 0.5rem;
+	// border: 1px solid white;
+}

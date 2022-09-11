@@ -1,0 +1,10 @@
+$background-color: #1e1e1e;
+
+#row-input-assumptions-container {
+	background-color: $background-color;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-flow: row nowrap;
+	flex-basis: 30%;
+}
