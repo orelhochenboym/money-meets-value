@@ -1,7 +1,7 @@
-import ParameterData from 'components/ParameterData/ParameterData';
-import ParameterInput from 'components/ParameterInput/ParameterInput';
-import ParameterLabel from 'components/ParameterLabel/ParameterLabel';
 import React from 'react';
+import ParameterData from 'routes/Home/components/StockAnalyzerTool/RowParameter/ParameterData/ParameterData';
+import ParameterInput from 'routes/Home/components/StockAnalyzerTool/RowParameter/ParameterInput/ParameterInput';
+import ParameterLabel from 'routes/Home/components/StockAnalyzerTool/RowParameter/ParameterLabel/ParameterLabel';
 import './RowParameter.scss';
 
 type Props = {

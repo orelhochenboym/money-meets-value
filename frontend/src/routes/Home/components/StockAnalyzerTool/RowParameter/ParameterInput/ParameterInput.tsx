@@ -1,4 +1,4 @@
-import ParameterInputElement from 'components/ParameterInputElement/ParameterInputElement';
+import ParameterInputElement from 'routes/Home/components/StockAnalyzerTool/RowParameter/ParameterInput/ParameterInputElement/ParameterInputElement';
 import './ParameterInput.scss';
 
 type Props = {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StockResults from '../StockResults/StockResults';
-import StockSearchInput from '../StockSearchInput/StockSearchInput';
+import StockResults from 'routes/Home/components/StockSearch/StockResults/StockResults';
+import StockSearchInput from 'routes/Home/components/StockSearch/StockSearchInput/StockSearchInput';
 import './StockSearch.scss';
 
 export default function StockSearchForm() {

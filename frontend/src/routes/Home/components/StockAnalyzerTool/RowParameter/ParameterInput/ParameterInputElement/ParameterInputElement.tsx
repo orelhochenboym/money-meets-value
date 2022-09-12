@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import correctParameterInput from 'utils/correctParameterInput';
+import correctParameterInput from 'routes/Home/utils/correctParameterInput';
 import './ParameterInputElement.scss';
 
 type Props = {

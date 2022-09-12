@@ -1,7 +1,7 @@
 import 'assets/global.scss';
-import StockAnalyzerTool from 'components/StockAnalyzerTool/StockAnalyzerTool';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import StockAnalyzerTool from 'routes/Home/components/StockAnalyzerTool/StockAnalyzerTool';
 import Home from 'routes/Home/Home';
 
 export default function App() {

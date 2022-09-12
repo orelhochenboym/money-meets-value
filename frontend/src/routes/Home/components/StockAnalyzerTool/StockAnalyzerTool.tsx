@@ -1,7 +1,7 @@
-import RowHeader from 'components/RowHeader/RowHeader';
-import RowParameter from 'components/RowParameter/RowParameter';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import RowParameter from 'routes/Home/components/StockAnalyzerTool/RowParameter/RowParameter';
+import RowHeader from './RowHeader/RowHeader';
 import './StockAnalyzerTool.scss';
 
 export default function StockAnalyzerTable() {
