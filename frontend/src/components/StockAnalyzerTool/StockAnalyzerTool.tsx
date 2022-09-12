@@ -18,14 +18,14 @@ export default function StockAnalyzerTable() {
 		fetchHistoricalData();
 	}, []);
 
-	return (
+	return Object.keys(data.rg).length !== 0 ? (
 		<form action='' method='get'>
 			<div id='stock-analyzer-tool-container'>
 				<RowHeader stockTicker={stockTicker!} />
-				<RowParameter stockData={data['rg']} stockTicker={stockTicker!} paramName='Revenue Growth %' />
-				<RowParameter stockData={data['npm']} stockTicker={stockTicker!} paramName='Net Profit Margin %' />
-				<RowParameter stockData={data['fcfm']} stockTicker={stockTicker!} paramName='Free Cash Flow Margin %' />
-				<RowParameter stockData={data['sb']} stockTicker={stockTicker!} paramName='Share Buybacks %' />
+				<RowParameter stockData={data.rg} stockTicker={stockTicker!} paramName='Revenue Growth %' />
+				<RowParameter stockData={data.npm} stockTicker={stockTicker!} paramName='Net Profit Margin %' />
+				<RowParameter stockData={data.fcfm} stockTicker={stockTicker!} paramName='Free Cash Flow Margin %' />
+				<RowParameter stockData={data.sb} stockTicker={stockTicker!} paramName='Share Buybacks %' />
 				<RowParameter stockData={'N/A'} stockTicker={stockTicker!} paramName='P/E (Price / Earnings)' />
 				<RowParameter stockData={'N/A'} stockTicker={stockTicker!} paramName='P/FCF (Price / Free Cash Flow)' />
 				<RowParameter stockData={'N/A'} stockTicker={stockTicker!} paramName='Desired Annual Returns %' />
@@ -36,5 +36,7 @@ export default function StockAnalyzerTable() {
 				</div>
 			</div>
 		</form>
+	) : (
+		<div />
 	);
 }
