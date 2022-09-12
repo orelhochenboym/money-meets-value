@@ -2,7 +2,6 @@ import React from 'react';
 import './ParameterData.scss';
 
 type Props = {
-	stockTicker: string;
 	paramType: string;
 	stockData: any;
 };

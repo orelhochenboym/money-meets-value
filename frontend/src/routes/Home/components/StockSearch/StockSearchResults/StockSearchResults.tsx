@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './StockResults.scss';
+import './StockSearchResults.scss';
 
 type Props = {
 	stockTicker: string;
-	onStockChange: Function;
 };
 
-export default function StockResults(props: Props) {
+export default function StockSearchResults(props: Props) {
 	const [data, setData] = useState({});
 
 	useEffect(() => {

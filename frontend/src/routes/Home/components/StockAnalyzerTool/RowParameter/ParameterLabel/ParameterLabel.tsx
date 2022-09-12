@@ -2,10 +2,10 @@ import React from 'react';
 import './ParameterLabel.scss';
 
 type Props = {
-	paramString: String;
+	paramName: string;
 	paramType: string;
 };
 
 export default function ParameterLabel(props: Props) {
-	return props.paramType === 'sb' ? <div id='param-label-text'>{props.paramString + ' (CAGR)'}</div> : <div id='param-label-text'>{props.paramString}</div>;
+	return props.paramType === 'sb' ? <div id='param-label-text'>{props.paramName + ' (CAGR)'}</div> : <div id='param-label-text'>{props.paramName}</div>;
 }

@@ -6,7 +6,6 @@ import './RowParameter.scss';
 
 type Props = {
 	paramName: string;
-	stockTicker: string;
 	stockData: Object;
 };
 
@@ -24,8 +23,8 @@ export default function RowParameter(props: Props) {
 	const paramType = vocabulary[props.paramName as keyof typeof vocabulary];
 	return (
 		<div id='param-row-container'>
-			<ParameterLabel paramString={props.paramName} paramType={paramType} />
-			<ParameterData stockData={props.stockData} stockTicker={props.stockTicker} paramType={paramType} />
+			<ParameterLabel paramName={props.paramName} paramType={paramType} />
+			<ParameterData stockData={props.stockData} paramType={paramType} />
 			<ParameterInput paramType={paramType} />
 		</div>
 	);

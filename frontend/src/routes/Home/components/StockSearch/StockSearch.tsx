@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StockResults from 'routes/Home/components/StockSearch/StockResults/StockResults';
 import StockSearchInput from 'routes/Home/components/StockSearch/StockSearchInput/StockSearchInput';
+import StockSearchResults from 'routes/Home/components/StockSearch/StockSearchResults/StockSearchResults';
 import './StockSearch.scss';
 
 export default function StockSearchForm() {
@@ -13,7 +13,7 @@ export default function StockSearchForm() {
 	return (
 		<div id='stock-search-container'>
 			<StockSearchInput stockTicker={stockTicker} onStockChange={handleChange} />
-			<StockResults stockTicker={stockTicker} onStockChange={handleChange} />
+			<StockSearchResults stockTicker={stockTicker} />
 		</div>
 	);
 }
