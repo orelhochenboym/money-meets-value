@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function StockSearchResults(props: Props) {
-	const [data, setData] = useState({});
+	const [data, setData] = useState([{ ticker: '', name: '', cik: '' }]);
 
 	useEffect(() => {
 		if (props.stockTicker !== '') {
@@ -18,16 +18,16 @@ export default function StockSearchResults(props: Props) {
 			}, 1000);
 			return () => clearTimeout(timeoutId);
 		} else {
-			setData({});
+			setData([{ ticker: '', name: '', cik: '' }]);
 		}
 	}, [props.stockTicker]);
 
-	return Object.keys(data).length === 0 ? (
+	return data.length === 1 ? (
 		<div />
 	) : (
 		<div id='search-results-container'>
-			{Object.keys(data).map((key, i) => (
-				<NavLink reloadDocument={true} id='result' key={i} to={`/calculate/${key}`}>{`${key} - ${data[key as keyof typeof data]}`}</NavLink>
+			{data.map((searchResult, i) => (
+				<NavLink reloadDocument={true} id='result' key={i} to={`/calculate/${searchResult.cik}`}>{`${searchResult.ticker} - ${searchResult.name}`}</NavLink>
 			))}
 		</div>
 	);

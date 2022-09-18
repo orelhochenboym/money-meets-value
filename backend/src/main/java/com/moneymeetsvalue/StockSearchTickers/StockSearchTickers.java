@@ -4,14 +4,17 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class StockSearchTickers {
 
@@ -99,16 +102,22 @@ public class StockSearchTickers {
      *         We return a LinkedHashMap<String,
      *         String> in order to retain the original insertion order.
      */
-    public LinkedHashMap<String, String> getStockSearchTickers() {
-        LinkedHashMap<String, String> map = new LinkedHashMap<>();
+    public ArrayList<LinkedHashMap<String, String>> getStockSearchTickers() {
+        ArrayList<LinkedHashMap<String, String>> searchResultsList = new ArrayList<>();
+        String[] fieldsToRemove = new String[] { "market", "locale", "primary_exchange", "type", "active",
+                "currency_name", "composite_figi", "share_class_figi", "last_updated_utc" };
 
         JsonNode results = this.stockSearchTicker.get("results");
 
         for (JsonNode result : results) {
-            map.put(result.get("ticker").asText(), result.get("name").asText());
+            for (String fieldToRemove : fieldsToRemove) {
+                ((ObjectNode) result).remove(fieldToRemove);
+            }
+            searchResultsList.add(objectMapper.convertValue(result, new TypeReference<LinkedHashMap<String, String>>() {
+            }));
         }
 
-        return map;
+        return searchResultsList;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.moneymeetsvalue.StockSearchTickers;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +27,7 @@ public class StockSearchTickersController {
      *         stock ticker.
      */
     @GetMapping("{stockTicker}")
-    public LinkedHashMap<String, String> search(@PathVariable String stockTicker) {
+    public ArrayList<LinkedHashMap<String, String>> search(@PathVariable String stockTicker) {
         return new StockSearchTickers(stockTicker).getStockSearchTickers();
     }
 

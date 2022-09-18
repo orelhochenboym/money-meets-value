@@ -4,14 +4,10 @@ import HeaderMyAssumptions from 'routes/Home/components/StockAnalyzerTool/RowHea
 import HeaderStockLabel from 'routes/Home/components/StockAnalyzerTool/RowHeader/HeaderStockLabel/HeaderStockLabel';
 import './RowHeader.scss';
 
-type Props = {
-	stockTicker: string;
-};
-
-export default function RowHeader(props: Props) {
+export default function RowHeader() {
 	return (
 		<div id='row-header-container'>
-			<HeaderStockLabel stockTicker={props.stockTicker} />
+			<HeaderStockLabel />
 			<HeaderHistorical />
 			<HeaderMyAssumptions />
 		</div>

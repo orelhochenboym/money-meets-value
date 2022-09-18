@@ -9,7 +9,7 @@ export default function App() {
 		<div className='App'>
 			<Routes>
 				<Route path='/' element={<Home />}>
-					<Route path='calculate/:stockTicker' element={<StockAnalyzerTool />} />
+					<Route path='calculate/:cik' element={<StockAnalyzerTool />} />
 				</Route>
 				<Route path='*' element={<Navigate to={'/'} />} />
 			</Routes>

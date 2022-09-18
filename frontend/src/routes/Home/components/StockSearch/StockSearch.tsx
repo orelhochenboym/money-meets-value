@@ -6,8 +6,8 @@ import './StockSearch.scss';
 export default function StockSearchForm() {
 	const [stockTicker, setStockTicker] = useState('');
 
-	function handleChange(stockTicker: string) {
-		setStockTicker(stockTicker);
+	function handleChange(cik: string) {
+		setStockTicker(cik);
 	}
 
 	return (
