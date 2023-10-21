@@ -27,8 +27,8 @@ export const CompanyFactsSchema = z.object({
     ),
     'us-gaap': z.record(
       z.object({
-        label: z.string(),
-        description: z.string(),
+        label: z.string().nullable(),
+        description: z.string().nullable(),
         units: z.record(
           z.array(
             z.object({
