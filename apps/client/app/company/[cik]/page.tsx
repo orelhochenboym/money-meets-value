@@ -2,7 +2,6 @@ const getCompanyFacts = async (cik: string) => {
   const companyfacts = await fetch(
     `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`,
   ).then((res) => res.json());
-
   return companyfacts;
 };
 
