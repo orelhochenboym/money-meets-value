@@ -12,8 +12,13 @@ import {
   CommandList,
   CommandSeparator,
 } from './ui/command';
+import { CompanyTickersExchange } from '@money-meets-value/types';
 
-export function CommandMenu({ ...props }: DialogProps) {
+export function Searchbar({
+  ...props
+}: DialogProps & {
+  companies?: { [x: string]: CompanyTickersExchange['data'][number][number] }[];
+}) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -43,14 +48,14 @@ export function CommandMenu({ ...props }: DialogProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="hidden lg:inline-flex">Search documentation...</span>
+        <span className="hidden lg:inline-flex">Search ticker or CIK</span>
         <span className="inline-flex lg:hidden">Search...</span>
-        <kbd className="bg-muted pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-          <span className="text-xs">⌘</span>K
+        <kbd className="bg-muted pointer-events-none absolute right-2.5 top-auto hidden h-5 select-none items-center gap-1 rounded border px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+          <span className="text-xs">/</span>
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search ticker or CIK..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
           {props.children}
