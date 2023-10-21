@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { DialogProps } from '@radix-ui/react-alert-dialog';
 import { cn } from '../lib/utils';
 import { Button } from './ui/button';
@@ -9,16 +8,20 @@ import {
   CommandDialog,
   CommandEmpty,
   CommandInput,
+  CommandItem,
   CommandList,
   CommandSeparator,
 } from './ui/command';
 import { CompanyTickersExchange } from '@money-meets-value/types';
+import { Badge } from './ui/badge';
+import { useRouter } from 'next/navigation';
 
 export function Searchbar({
   ...props
 }: DialogProps & {
-  companies?: { [x: string]: CompanyTickersExchange['data'][number][number] }[];
+  companies: { [x: string]: CompanyTickersExchange['data'][number][number] }[];
 }) {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -58,7 +61,35 @@ export function Searchbar({
         <CommandInput placeholder="Search ticker or CIK..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {props.children}
+          {props.companies.map((company) => {
+            const values = Object.values(company);
+
+            return (
+              <CommandItem
+                key={values[0]}
+                value={values[0]?.toString().padStart(10, '0')}
+                className="flex cursor-pointer justify-between"
+                onSelect={(cik) =>
+                  runCommand(() => router.push(`company/${cik}`))
+                }
+              >
+                <div className="flex w-[20%] items-center justify-center">
+                  {values[2]}
+                </div>
+
+                <div className="flex w-[60%] items-center justify-center">
+                  {values[1]}
+                </div>
+
+                <Badge
+                  variant={values[3] ? 'outline' : 'destructive'}
+                  className="flex w-[20%] items-center justify-center"
+                >
+                  {values[3] ? values[3].toString().toUpperCase() : 'N/A'}
+                </Badge>
+              </CommandItem>
+            );
+          })}
           <CommandSeparator />
         </CommandList>
       </CommandDialog>

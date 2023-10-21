@@ -7,8 +7,6 @@ import {
   CompanyTickersExchangeSchema,
 } from '@money-meets-value/types';
 import { fromZodError } from 'zod-validation-error';
-import { CommandItem } from './ui/command';
-import { Badge } from './ui/badge';
 
 const getCompanies = async () => {
   const companies: CompanyTickersExchange = await fetch(
@@ -51,30 +49,7 @@ export const Header: React.FC = async () => {
     <div className="flex items-center justify-between">
       <Logo />
       <Navbar />
-      <Searchbar companies={companies}>
-        {companies.map((company) => {
-          const values = Object.values(company);
-
-          return (
-            <CommandItem key={values[0]} className="flex justify-between">
-              <div className="flex w-[20%] items-center justify-center">
-                {values[2]}
-              </div>
-
-              <div className="flex w-[60%] items-center justify-center">
-                {values[1]}
-              </div>
-
-              <Badge
-                variant={values[3] ? 'outline' : 'destructive'}
-                className="flex w-[20%] items-center justify-center"
-              >
-                {values[3] ? values[3].toString().toUpperCase() : 'N/A'}
-              </Badge>
-            </CommandItem>
-          );
-        })}
-      </Searchbar>
+      <Searchbar companies={companies} />
     </div>
   );
 };
