@@ -16,7 +16,9 @@
     "react-dom": "18.2.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zod": "^3.22.4",
+    "zod-validation-error": "^2.0.0"
   },
   "devDependencies": {
     "@nx/cypress": "17.0.0",

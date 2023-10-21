@@ -11,7 +11,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // console.log(error);
+    return;
   }, [error]);
 
   const router = useRouter();
