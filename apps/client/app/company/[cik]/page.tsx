@@ -20,9 +20,5 @@ const getCompanyFacts = async (cik: string) => {
 export default async function Index({ params }: { params: { cik: string } }) {
   const companyfacts = await getCompanyFacts(params.cik);
 
-  return (
-    <div className="h-full w-full border-2 border-green-400">
-      {companyfacts.cik}
-    </div>
-  );
+  return <div className="h-full w-full">{companyfacts.cik}</div>;
 }

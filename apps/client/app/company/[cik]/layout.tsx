@@ -1,3 +1,3 @@
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <div>CIK Layout{children}</div>;
+  return <div className="h-full w-full">{children}</div>;
 }
