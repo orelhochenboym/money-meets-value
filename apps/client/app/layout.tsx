@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import { Navbar } from '../components/navbar';
+import { Header } from '../components/header';
 import './global.css';
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
       className={`${inter.className} h-full w-full overflow-hidden`}
     >
       <body className="flex h-full w-full flex-col overflow-hidden p-2">
-        <Navbar />
+        <Header />
         {children}
       </body>
     </html>
