@@ -1,29 +1,26 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Button } from '../../../components/ui/button';
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
   useEffect(() => {
-    console.log(error);
+    // console.log(error);
   }, [error]);
 
+  const router = useRouter();
+  const cik = usePathname().split('/').slice(-1)[0];
+
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
+    <div className="flex flex-col items-center justify-center border border-red-400">
+      {`Sorry, we couldn't find the company related to provided cik: ${cik}`}
+      <Button onClick={() => router.push('/')}>Home Page</Button>
     </div>
   );
 }
