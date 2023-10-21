@@ -10,6 +10,7 @@ const getCompanyFacts = async (cik: string) => {
   const results = CompanyFactsSchema.safeParse(companyfacts);
 
   if (!results.success) {
+    // TODO: toast
     console.log(fromZodError(results.error));
   }
 
