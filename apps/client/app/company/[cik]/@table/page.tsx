@@ -32,59 +32,56 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <div className="h-full w-full overflow-auto">
-      <Table className="h-full w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Metric</TableHead>
-            {tenLastYears.map((year) => (
-              <TableHead key={year}>{year}</TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.keys(companyfacts.facts).map((taxonomy) => {
-            type factsKey = keyof typeof companyfacts.facts;
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Metric</TableHead>
+          {tenLastYears.map((year) => (
+            <TableHead key={year} className="text-center">
+              {year}
+            </TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Object.keys(companyfacts.facts).map((taxonomy) => {
+          type factsKey = keyof typeof companyfacts.facts;
 
-            return Object.keys(companyfacts.facts[taxonomy as factsKey]).map(
-              (key, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>
-                      {companyfacts.facts[taxonomy as factsKey][key].label ??
-                        key}
-                    </TableCell>
-                    {tenLastYears.map((year) => (
-                      <TableCell key={year}>
-                        {Object.keys(
-                          companyfacts.facts[taxonomy as factsKey][key].units,
-                        ).map((unitKey) => {
-                          return (
-                            <TableCell key={unitKey}>
-                              {parseFloat(
-                                (
-                                  (companyfacts.facts[taxonomy as factsKey][
-                                    key
-                                  ].units[unitKey].find((fact) => {
-                                    return (
-                                      fact.form.includes('K') &&
-                                      fact.frame?.includes(year.toString())
-                                    );
-                                  })?.val ?? 0) / 1000000
-                                ).toFixed(2),
-                              ).toLocaleString() ?? 'N/A'}
-                            </TableCell>
-                          );
-                        })}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                );
-              },
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
+          return Object.keys(companyfacts.facts[taxonomy as factsKey]).map(
+            (key, i) => {
+              return (
+                <TableRow key={i} className="bg-red-50">
+                  <TableCell className="bg-red-100">
+                    {companyfacts.facts[taxonomy as factsKey][key].label ?? key}
+                  </TableCell>
+                  {tenLastYears.map((year) => {
+                    return Object.keys(
+                      companyfacts.facts[taxonomy as factsKey][key].units,
+                    ).map((unitKey) => {
+                      return (
+                        <TableCell key={unitKey} className="bg-blue-50">
+                          {parseFloat(
+                            (
+                              (companyfacts.facts[taxonomy as factsKey][
+                                key
+                              ].units[unitKey].find((fact) => {
+                                return (
+                                  fact.form.includes('K') &&
+                                  fact.frame?.includes(year.toString())
+                                );
+                              })?.val ?? 0) / 1000000
+                            ).toFixed(2),
+                          ).toLocaleString() ?? 'N/A'}
+                        </TableCell>
+                      );
+                    });
+                  })}
+                </TableRow>
+              );
+            },
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 }

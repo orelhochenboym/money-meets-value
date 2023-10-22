@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} h-full w-full overflow-hidden`}
+      className={`${inter.className} h-full w-full overflow-hidden text-center`}
     >
       <body className="flex h-full w-full flex-col overflow-hidden">
         <Header />
