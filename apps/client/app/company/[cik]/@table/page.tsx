@@ -34,8 +34,13 @@ export default async function Index({ params }: { params: { cik: string } }) {
   return (
     <Table className="rounded-lg border">
       <TableHeader className="sticky top-0 backdrop-blur">
-        <TableRow>
-          <TableHead>Metric</TableHead>
+        <TableRow className="text-base">
+          <TableHead>
+            Metric{' '}
+            <span className="text-xs">
+              (In Millions of $ (USD) except per share items)
+            </span>
+          </TableHead>
           {tenLastYears.map((year) => (
             <TableHead key={year} className="text-center">
               {year}
