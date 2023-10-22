@@ -32,8 +32,8 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <div className="h-full w-full">
-      <Table className="h-full w-full border">
+    <div className="h-full w-full overflow-auto">
+      <Table className="h-full w-full">
         <TableHeader>
           <TableRow>
             <TableHead>Metric</TableHead>
@@ -43,35 +43,46 @@ export default async function Index({ params }: { params: { cik: string } }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Object.keys(companyfacts.facts.dei).map((key, i) => (
-            <TableRow key={i}>
-              <TableCell>{companyfacts.facts.dei[key].label ?? key}</TableCell>
-              {tenLastYears.map((year) => (
-                <TableCell key={year}>
-                  {Object.keys(companyfacts.facts.dei[key].units).map(
-                    (unitKey) => {
-                      return (
-                        <TableCell key={unitKey}>
-                          {parseFloat(
-                            (
-                              (companyfacts.facts.dei[key].units[unitKey].find(
-                                (fact) => {
-                                  return (
-                                    fact.form.includes('K') &&
-                                    fact.frame?.includes(year.toString())
-                                  );
-                                },
-                              )?.val ?? 0) / 1000000
-                            ).toFixed(2),
-                          ).toLocaleString() ?? 'N/A'}
-                        </TableCell>
-                      );
-                    },
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
+          {Object.keys(companyfacts.facts).map((taxonomy) => {
+            type factsKey = keyof typeof companyfacts.facts;
+
+            return Object.keys(companyfacts.facts[taxonomy as factsKey]).map(
+              (key, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>
+                      {companyfacts.facts[taxonomy as factsKey][key].label ??
+                        key}
+                    </TableCell>
+                    {tenLastYears.map((year) => (
+                      <TableCell key={year}>
+                        {Object.keys(
+                          companyfacts.facts[taxonomy as factsKey][key].units,
+                        ).map((unitKey) => {
+                          return (
+                            <TableCell key={unitKey}>
+                              {parseFloat(
+                                (
+                                  (companyfacts.facts[taxonomy as factsKey][
+                                    key
+                                  ].units[unitKey].find((fact) => {
+                                    return (
+                                      fact.form.includes('K') &&
+                                      fact.frame?.includes(year.toString())
+                                    );
+                                  })?.val ?? 0) / 1000000
+                                ).toFixed(2),
+                              ).toLocaleString() ?? 'N/A'}
+                            </TableCell>
+                          );
+                        })}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              },
+            );
+          })}
         </TableBody>
       </Table>
     </div>
