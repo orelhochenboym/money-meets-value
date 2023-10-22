@@ -82,6 +82,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
                       );
                     })?.val;
 
+                    // TODO: handle per share and small number cases
                     if (value) {
                       const floatValue = parseFloat(
                         (value / 1000000).toFixed(2),
