@@ -64,9 +64,16 @@ export default async function Index({ params }: { params: { cik: string } }) {
                     const value = companyfacts.facts[
                       deiOrUsGaap as deiOrUsGaapKey
                     ][factKey].units[unit].find((filing) => {
+                      if (!filing.frame) {
+                        return false;
+                      }
                       return (
                         filing.form.includes('K') &&
-                        filing.frame?.includes(year.toString())
+                        filing.frame.includes(year.toString()) &&
+                        !(
+                          filing.frame.includes('Q') &&
+                          !filing.frame.includes('I')
+                        )
                       );
                     })?.val;
 
