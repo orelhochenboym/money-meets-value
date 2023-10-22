@@ -19,9 +19,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.className} h-full w-full overflow-hidden`}
     >
-      <body className="flex h-full w-full flex-col overflow-hidden p-2">
+      <body className="flex h-full w-full flex-col overflow-hidden">
         <Header />
-        {children}
+        <div className="flex h-full w-full flex-col p-2">{children}</div>
       </body>
     </html>
   );

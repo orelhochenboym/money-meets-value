@@ -46,7 +46,7 @@ export const Header: React.FC = async () => {
   const companies = await getCompanies();
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="border-accent flex items-center justify-between border-b-2 p-3">
       <Logo />
       <Navbar />
       <Searchbar companies={companies} />
