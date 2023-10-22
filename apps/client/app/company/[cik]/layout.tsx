@@ -7,7 +7,7 @@ export default function Layout({
 }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center p-10">
-      {/* {children} */}
+      {children}
       {table}
     </div>
   );

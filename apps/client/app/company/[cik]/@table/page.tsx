@@ -32,10 +32,10 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <Table>
+    <Table className="bg-blue-300">
       <TableHeader>
         <TableRow>
-          <TableHead>Metric</TableHead>
+          <TableHead className="bg-red-200">Metric</TableHead>
           {tenLastYears.map((year) => (
             <TableHead key={year} className="text-center">
               {year}
@@ -44,42 +44,32 @@ export default async function Index({ params }: { params: { cik: string } }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Object.keys(companyfacts.facts).map((taxonomy) => {
-          type factsKey = keyof typeof companyfacts.facts;
+        {Object.keys(companyfacts.facts).map((deiOrUsGaap) => {
+          type deiOrUsGaapKey = keyof typeof companyfacts.facts;
 
-          return Object.keys(companyfacts.facts[taxonomy as factsKey]).map(
-            (key, i) => {
-              return (
-                <TableRow key={i} className="bg-red-50">
-                  <TableCell className="bg-red-100">
-                    {companyfacts.facts[taxonomy as factsKey][key].label ?? key}
-                  </TableCell>
-                  {tenLastYears.map((year) => {
-                    return Object.keys(
-                      companyfacts.facts[taxonomy as factsKey][key].units,
-                    ).map((unitKey) => {
-                      return (
-                        <TableCell key={unitKey} className="bg-blue-50">
-                          {parseFloat(
-                            (
-                              (companyfacts.facts[taxonomy as factsKey][
-                                key
-                              ].units[unitKey].find((fact) => {
-                                return (
-                                  fact.form.includes('K') &&
-                                  fact.frame?.includes(year.toString())
-                                );
-                              })?.val ?? 0) / 1000000
-                            ).toFixed(2),
-                          ).toLocaleString() ?? 'N/A'}
-                        </TableCell>
-                      );
-                    });
-                  })}
-                </TableRow>
-              );
-            },
-          );
+          return Object.keys(
+            companyfacts.facts[deiOrUsGaap as deiOrUsGaapKey],
+          ).map((factKey) => {
+            return (
+              <TableRow key={factKey}>
+                <TableCell className="max-w-min bg-red-50">
+                  {companyfacts.facts[deiOrUsGaap as deiOrUsGaapKey][factKey]
+                    .label ?? factKey}
+                </TableCell>
+                {tenLastYears.map((year) => {
+                  return (
+                    <TableCell key={year}>
+                      {Object.keys(
+                        companyfacts.facts[deiOrUsGaap as deiOrUsGaapKey][
+                          factKey
+                        ].units,
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          });
         })}
       </TableBody>
     </Table>
