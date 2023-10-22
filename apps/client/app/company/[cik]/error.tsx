@@ -18,7 +18,7 @@ export default function Error({
   const cik = usePathname().split('/').slice(-1)[0];
 
   return (
-    <div className="flex flex-col items-center justify-center border border-red-400">
+    <div className="flex flex-col items-center justify-center">
       {`Sorry, we couldn't find the company related to provided cik: ${cik}`}
       <Button onClick={() => router.push('/')}>Home Page</Button>
     </div>
