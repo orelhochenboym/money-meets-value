@@ -32,8 +32,8 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <Table>
-      <TableHeader>
+    <Table className="rounded-lg border">
+      <TableHeader className="sticky top-0 backdrop-blur">
         <TableRow>
           <TableHead>Metric</TableHead>
           {tenLastYears.map((year) => (
