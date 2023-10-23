@@ -21,6 +21,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "tslib": "^2.3.0",
+    "yahoo-finance2": "^2.8.1",
     "zod": "^3.22.4",
     "zod-validation-error": "^2.0.0"
   },
