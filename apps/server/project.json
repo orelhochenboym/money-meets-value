@@ -1,0 +1,50 @@
+{
+  "name": "server",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "server/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/server",
+        "main": "server/src/main.ts",
+        "tsConfig": "server/tsconfig.app.json",
+        "assets": ["server/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "server/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "server:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "server:build:development"
+        },
+        "production": {
+          "buildTarget": "server:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["server/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
