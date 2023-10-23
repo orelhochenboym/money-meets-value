@@ -1,24 +1,13 @@
-import { CompanyFacts, CompanyFactsSchema } from '@money-meets-value/types';
-import { fromZodError } from 'zod-validation-error';
+const getCompanyInfo = async (cik: string) => {
+  const companyinfo = await fetch(`http://localhost:3000/api/${cik}`, {
+    cache: 'no-cache',
+  }).then((res) => res.json());
 
-const getCompanyFacts = async (cik: string) => {
-  const companyfacts: CompanyFacts = await fetch(
-    `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`,
-    { cache: 'no-cache' },
-  ).then((res) => res.json());
-
-  const results = CompanyFactsSchema.safeParse(companyfacts);
-
-  if (!results.success) {
-    // TODO: toast
-    console.log(fromZodError(results.error));
-  }
-
-  return companyfacts;
+  return companyinfo;
 };
 
 export default async function Index({ params }: { params: { cik: string } }) {
-  const companyfacts = await getCompanyFacts(params.cik);
+  const companyinfo = await getCompanyInfo(params.cik);
 
-  return <div className="h-1/2 w-full">{companyfacts.entityName}</div>;
+  return <div className="h-1/2 w-full">{JSON.stringify(companyinfo)}</div>;
 }
