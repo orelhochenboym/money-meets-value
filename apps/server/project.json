@@ -1,7 +1,7 @@
 {
   "name": "server",
-  "$schema": "../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "server/src",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/server/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,12 +11,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/server",
-        "main": "server/src/main.ts",
-        "tsConfig": "server/tsconfig.app.json",
-        "assets": ["server/src/assets"],
+        "outputPath": "dist/apps/server",
+        "main": "apps/server/src/main.ts",
+        "tsConfig": "apps/server/tsconfig.app.json",
+        "assets": ["apps/server/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "server/webpack.config.js"
+        "webpackConfig": "apps/server/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -42,7 +42,21 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["server/**/*.ts"]
+        "lintFilePatterns": ["apps/server/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/server/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
