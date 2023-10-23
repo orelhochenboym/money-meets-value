@@ -1,13 +1,14 @@
 export default function Layout({
-  children,
   table,
+  info,
 }: {
   children: React.ReactNode;
   table: React.ReactNode;
+  info: React.ReactNode;
 }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      {children}
+      {info}
       {table}
     </div>
   );
