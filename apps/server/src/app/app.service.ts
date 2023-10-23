@@ -4,6 +4,7 @@ import {
 } from '@money-meets-value/types';
 import { Injectable } from '@nestjs/common';
 import { fromZodError } from 'zod-validation-error';
+import yahooFinance from 'yahoo-finance2';
 
 const getCompanies = async () => {
   const companies: CompanyTickersExchange = await fetch(
@@ -56,8 +57,13 @@ export class AppService {
       throw new Error('No company found');
     }
 
-    return relatedCompany[
-      Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
-    ];
+    const ticker =
+      relatedCompany[
+        Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
+      ]?.toString() ?? '';
+
+    const data = yahooFinance.quote(ticker);
+
+    return data;
   }
 }
