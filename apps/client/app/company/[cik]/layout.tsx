@@ -7,7 +7,7 @@ export default function Layout({
   info: React.ReactNode;
 }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-start gap-8">
       {info}
       {table}
     </div>

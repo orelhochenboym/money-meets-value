@@ -32,7 +32,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <div className="h-1/2 w-full">
+    <div className="h-full w-full overflow-auto">
       <Table className="rounded-lg border">
         <TableHeader className="sticky top-0 backdrop-blur">
           <TableRow className="text-base">
