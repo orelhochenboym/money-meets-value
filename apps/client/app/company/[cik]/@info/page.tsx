@@ -34,7 +34,11 @@ export default async function Index({ params }: { params: { cik: string } }) {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex h-full w-full items-end justify-start gap-2">
-          <h1 className="text-3xl font-bold">{companyInfo.bid}</h1>
+          <h1 className="text-3xl font-bold">
+            {companyInfo.bid !== 0
+              ? companyInfo.bid
+              : companyInfo.regularMarketPrice}
+          </h1>
           <span className="font-bold">{companyInfo.financialCurrency}</span>
           <span
             className={
