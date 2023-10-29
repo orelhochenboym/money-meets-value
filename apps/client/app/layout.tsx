@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
 import './global.css';
+import { NiceModalProvider } from '../components/nice-modal-provider';
 
 export const metadata = {
   title: 'Welcome to client',
@@ -15,16 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.className} h-full w-full overflow-hidden text-center`}
-    >
-      <body className="flex h-full w-full flex-col overflow-hidden">
-        <Header />
-        <div className="flex h-full w-full flex-col overflow-hidden p-2">
-          {children}
-        </div>
-      </body>
-    </html>
+    <NiceModalProvider>
+      <html
+        lang="en"
+        className={`${inter.className} h-full w-full overflow-hidden text-center`}
+      >
+        <body className="flex h-full w-full flex-col overflow-hidden">
+          <Header />
+          <div className="flex h-full w-full flex-col overflow-hidden p-2">
+            {children}
+          </div>
+        </body>
+      </html>
+    </NiceModalProvider>
   );
 }
