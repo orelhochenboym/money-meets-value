@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
-import './global.css';
 import { NiceModalProvider } from '../components/nice-modal-provider';
+import './global.css';
 
 export const metadata = {
   title: 'Welcome to client',
@@ -12,8 +12,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
+  search,
 }: {
   children: React.ReactNode;
+  search: React.ReactNode;
 }) {
   return (
     <NiceModalProvider>
@@ -24,6 +26,7 @@ export default function RootLayout({
         <body className="flex h-full w-full flex-col overflow-hidden">
           <Header />
           <div className="flex h-full w-full flex-col overflow-hidden p-2">
+            {search}
             {children}
           </div>
         </body>
