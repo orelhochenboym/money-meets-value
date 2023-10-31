@@ -20,8 +20,8 @@ export default async function Index({ params }: { params: { cik: string } }) {
   const companyInfo = await getCompanyInfo(params.cik);
 
   return (
-    <div className="h-min w-full">
-      <div className="flex">
+    <div className="flex flex-col h-fit w-fit bg-green-50 gap-2">
+      <div className="flex bg-yellow-50">
         <Avatar className="inline-flex h-16 w-16 select-none items-center justify-center overflow-hidden border align-middle">
           <AvatarImage className="object-contain" />
           <AvatarFallback>{companyInfo.symbol}</AvatarFallback>
@@ -35,64 +35,62 @@ export default async function Index({ params }: { params: { cik: string } }) {
           </span>
         </div>
       </div>
-      <div className="flex items-center justify-between">
-        <div className="flex h-full w-full items-end justify-start gap-2">
-          <h1 className="text-3xl font-bold">
-            {companyInfo.bid !== 0
-              ? companyInfo.bid
-              : companyInfo.regularMarketPrice}
-          </h1>
-          <span className="font-bold">{companyInfo.financialCurrency}</span>
-          <span
-            className={
-              companyInfo.regularMarketChange &&
-              companyInfo.regularMarketChange > 0
-                ? 'text-green-500'
-                : 'text-destructive'
-            }
-          >
-            {companyInfo.regularMarketChange &&
+      <div className="flex h-full w-full items-end justify-start gap-2">
+        <h1 className="text-3xl font-bold">
+          {companyInfo.bid !== 0
+            ? companyInfo.bid
+            : companyInfo.regularMarketPrice}
+        </h1>
+        <span className="font-bold">{companyInfo.financialCurrency}</span>
+        <span
+          className={
+            companyInfo.regularMarketChange &&
             companyInfo.regularMarketChange > 0
-              ? '+'
-              : null}
-            {companyInfo.regularMarketChange?.toFixed(2)}
-          </span>
-          <span
-            className={
-              companyInfo.regularMarketChange &&
-              companyInfo.regularMarketChange > 0
-                ? 'text-green-500'
-                : 'text-destructive'
-            }
-          >
-            {'('}
-            {companyInfo.regularMarketChange &&
+              ? 'text-green-500'
+              : 'text-destructive'
+          }
+        >
+          {companyInfo.regularMarketChange &&
+          companyInfo.regularMarketChange > 0
+            ? '+'
+            : null}
+          {companyInfo.regularMarketChange?.toFixed(2)}
+        </span>
+        <span
+          className={
+            companyInfo.regularMarketChange &&
             companyInfo.regularMarketChange > 0
-              ? '+'
-              : undefined}
-            {`${companyInfo.regularMarketChangePercent?.toFixed(2)}%)`}
-          </span>
+              ? 'text-green-500'
+              : 'text-destructive'
+          }
+        >
+          {'('}
+          {companyInfo.regularMarketChange &&
+          companyInfo.regularMarketChange > 0
+            ? '+'
+            : undefined}
+          {`${companyInfo.regularMarketChangePercent?.toFixed(2)}%)`}
+        </span>
+      </div>
+      <div className="flex h-full w-full items-end justify-start gap-20">
+        <div className="flex flex-col items-start">
+          <span>{companyInfo.epsForward?.toFixed(2)}</span>
+          <span className="text-muted-foreground">EPS</span>
         </div>
-        <div className="flex h-full w-full items-end justify-end gap-20">
-          <div className="flex flex-col items-start">
-            <span>{companyInfo.epsForward?.toFixed(2)}</span>
-            <span className="text-muted-foreground">EPS</span>
-          </div>
-          <div className="flex flex-col items-start">
-            <span>{companyInfo.forwardPE?.toFixed(2)}</span>
-            <span className="text-muted-foreground">P/E</span>
-          </div>
-          <div className="flex flex-col items-start">
-            <span>
-              {Number(
-                (companyInfo.marketCap && companyInfo.marketCap > 1000000
-                  ? companyInfo.marketCap / 1000000
-                  : companyInfo.marketCap ?? 0
-                ).toFixed(0),
-              ).toLocaleString()}
-            </span>
-            <span className="text-muted-foreground">Market Cap</span>
-          </div>
+        <div className="flex flex-col items-start">
+          <span>{companyInfo.forwardPE?.toFixed(2)}</span>
+          <span className="text-muted-foreground">P/E</span>
+        </div>
+        <div className="flex flex-col items-start">
+          <span>
+            {Number(
+              (companyInfo.marketCap && companyInfo.marketCap > 1000000
+                ? companyInfo.marketCap / 1000000
+                : companyInfo.marketCap ?? 0
+              ).toFixed(0),
+            ).toLocaleString()}
+          </span>
+          <span className="text-muted-foreground">Market Cap</span>
         </div>
       </div>
     </div>
