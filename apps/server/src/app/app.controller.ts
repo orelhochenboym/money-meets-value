@@ -10,4 +10,9 @@ export class AppController {
   getQuote(@Param('cik') cik: string) {
     return this.appService.getQuote(cik);
   }
+
+  @Get('chart/:cik')
+  getChart(@Param('cik') cik: string) {
+    return this.appService.getChart(cik);
+  }
 }

@@ -66,4 +66,29 @@ export class AppService {
 
     return data;
   }
+
+  async getChart(cik: string) {
+    const companies = await getCompanies();
+    const relatedCompany = companies.find((company) => {
+      for (const key in company) {
+        if (company[key] !== Number(cik)) {
+          continue;
+        }
+        return true;
+      }
+    });
+
+    if (!relatedCompany) {
+      throw new Error('No company found');
+    }
+
+    const ticker =
+      relatedCompany[
+        Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
+      ]?.toString() ?? '';
+
+    const data = yahooFinance.chart(ticker, { period1: 1667236413 });
+
+    return data;
+  }
 }
