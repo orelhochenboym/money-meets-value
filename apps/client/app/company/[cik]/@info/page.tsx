@@ -1,14 +1,17 @@
+import { Quote } from 'yahoo-finance2/dist/esm/src/modules/quote';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from '../../../../components/ui/avatar';
-import { Quote } from 'yahoo-finance2/dist/esm/src/modules/quote';
 
 const getCompanyInfo = async (cik: string) => {
-  const companyinfo: Quote = await fetch(`http://localhost:3000/api/${cik}`, {
-    cache: 'no-cache',
-  }).then((res) => res.json());
+  const companyinfo: Quote = await fetch(
+    `http://localhost:3000/api/quote/${cik}`,
+    {
+      cache: 'no-cache',
+    },
+  ).then((res) => res.json());
 
   return companyinfo;
 };

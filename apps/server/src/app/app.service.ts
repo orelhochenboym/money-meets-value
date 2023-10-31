@@ -3,8 +3,8 @@ import {
   CompanyTickersExchangeSchema,
 } from '@money-meets-value/types';
 import { Injectable } from '@nestjs/common';
-import { fromZodError } from 'zod-validation-error';
 import yahooFinance from 'yahoo-finance2';
+import { fromZodError } from 'zod-validation-error';
 
 const getCompanies = async () => {
   const companies: CompanyTickersExchange = await fetch(
@@ -42,7 +42,7 @@ const getCompanies = async () => {
 
 @Injectable()
 export class AppService {
-  async getData(cik: string) {
+  async getQuote(cik: string) {
     const companies = await getCompanies();
     const relatedCompany = companies.find((company) => {
       for (const key in company) {
