@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
+import { NiceModalProvider } from '../components/nice-modal-provider';
 import './global.css';
 
 export const metadata = {
@@ -11,18 +12,25 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
+  search,
 }: {
   children: React.ReactNode;
+  search: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.className} h-full w-full overflow-hidden`}
-    >
-      <body className="flex h-full w-full flex-col overflow-hidden p-2">
-        <Header />
-        {children}
-      </body>
-    </html>
+    <NiceModalProvider>
+      <html
+        lang="en"
+        className={`${inter.className} h-full w-full overflow-hidden text-center`}
+      >
+        <body className="flex h-full w-full flex-col overflow-hidden">
+          <Header />
+          <div className="flex h-full w-full flex-col overflow-hidden p-2">
+            {search}
+            {children}
+          </div>
+        </body>
+      </html>
+    </NiceModalProvider>
   );
 }
