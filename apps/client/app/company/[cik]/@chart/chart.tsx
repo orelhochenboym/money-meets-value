@@ -1,9 +1,9 @@
 'use client';
 
+import { getMonth, getYear, isEqual, min } from 'date-fns';
 import {
   Area,
   AreaChart,
-  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,31 +14,50 @@ import { ChartResultArray } from 'yahoo-finance2/dist/esm/src/modules/chart';
 type Props = { chart: ChartResultArray };
 
 export const Chart: React.FC<Props> = ({ chart }) => {
-  console.log(
-    chart.quotes
-      .filter((quote) => {
-        const date = new Date(quote.date);
-        return date.getMonth() % 3 === 0 && date.getDay() === 1;
-      })
-      .map((quote) => new Date(quote.date).toLocaleDateString()),
-  );
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <AreaChart width={500} height={400} data={chart.quotes}>
-        <CartesianGrid strokeDasharray="3 3" />
+    // Ratio of 3.04
+    <ResponsiveContainer width={760} height={250}>
+      <AreaChart data={chart.quotes}>
         <XAxis
           dataKey="date"
-          tickFormatter={(value) => new Date(value).toLocaleDateString()}
+          tickFormatter={(value) => {
+            const date = new Date(value);
+            const year = getYear(date);
+            const month = date.toLocaleString('default', { month: 'short' });
+
+            return `${month} ${year}`;
+          }}
           ticks={chart.quotes
             .filter((quote) => {
               const date = new Date(quote.date);
-              return date.getMonth() % 3 === 0 && date.getDay() === 1;
+              const month = getMonth(date);
+
+              const restOfDaysOfMonth = chart.quotes
+                .filter((quote) => {
+                  return getMonth(new Date(quote.date)) === month;
+                })
+                .map((quote) => new Date(quote.date));
+
+              const minTradingDateOfMonth = min(restOfDaysOfMonth);
+
+              return (
+                getMonth(date) % 2 === 0 && isEqual(date, minTradingDateOfMonth)
+              );
             })
-            .map((quote) => new Date(quote.date).toISOString())}
+            .map((quote) => {
+              const date = new Date(quote.date);
+              return date.toISOString();
+            })}
         />
-        <YAxis />
+        <YAxis domain={['dataMin', 'auto']} />
         <Tooltip />
-        <Area type="monotone" dataKey="close" stroke="#8884d8" fill="#8884d8" />
+        <Area
+          type="monotone"
+          dataKey="close"
+          stroke="#8884d8"
+          fill="#8884d8"
+          isAnimationActive={false}
+        />
       </AreaChart>
     </ResponsiveContainer>
   );
