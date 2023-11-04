@@ -17,6 +17,12 @@ export const Chart: React.FC<Props> = ({ chart }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={chart.quotes}>
+        <defs>
+          <linearGradient id="price" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#2563EB" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#2563EB" stopOpacity={0} />
+          </linearGradient>
+        </defs>
         <XAxis
           dataKey="date"
           tickFormatter={(value) => {
@@ -52,12 +58,21 @@ export const Chart: React.FC<Props> = ({ chart }) => {
         />
         <YAxis domain={['auto', 'auto']} />
         <Tooltip
-          formatter={(value, name, _) => {
-            console.log(name, _);
+          formatter={(value, _name, _props) => {
             return [`${Number(value).toFixed(2)}`, 'Price'];
           }}
+          itemStyle={{ color: 'hsl(var(--foreground))' }}
+          labelFormatter={(label) => {
+            return new Date(label).toLocaleDateString();
+          }}
+          labelStyle={{ color: 'hsl(var(--muted-foreground))' }}
         />
-        <Area type="monotone" dataKey="close" stroke="#2563EB" fill="#2563EB" />
+        <Area
+          type="monotone"
+          dataKey="close"
+          stroke="#2563EB"
+          fill="url(#price)"
+        />
       </AreaChart>
     </ResponsiveContainer>
   );
