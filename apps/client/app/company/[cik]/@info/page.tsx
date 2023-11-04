@@ -6,18 +6,23 @@ import {
 } from '../../../../components/ui/avatar';
 
 const getCompanyInfo = async (cik: string) => {
-  const companyinfo: Quote = await fetch(
+  const companyInfo: Quote = await fetch(
     `http://localhost:3000/api/quote/${cik}`,
     {
       cache: 'no-cache',
     },
   ).then((res) => res.json());
 
-  return companyinfo;
+  return companyInfo;
 };
 
 export default async function Index({ params }: { params: { cik: string } }) {
   const companyInfo = await getCompanyInfo(params.cik);
+  const formatter = new Intl.NumberFormat(undefined, {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: 2,
+  });
 
   return (
     <div className="flex flex-col h-fit w-1/2 gap-2">
@@ -83,12 +88,9 @@ export default async function Index({ params }: { params: { cik: string } }) {
         </div>
         <div className="flex flex-col items-start">
           <span>
-            {Number(
-              (companyInfo.marketCap && companyInfo.marketCap > 1000000
-                ? companyInfo.marketCap / 1000000
-                : companyInfo.marketCap ?? 0
-              ).toFixed(0),
-            ).toLocaleString()}
+            {!companyInfo.marketCap
+              ? 'N/A'
+              : formatter.format(companyInfo.marketCap)}
           </span>
           <span className="text-muted-foreground">Market Cap</span>
         </div>
