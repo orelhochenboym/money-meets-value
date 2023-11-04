@@ -1,7 +1,6 @@
 'use client';
 
 import { useModal } from '@ebay/nice-modal-react';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import { cn } from '../../lib/utils';
 import { Button } from '../ui/button';
@@ -9,12 +8,10 @@ import { Button } from '../ui/button';
 type Props = { modalId: string };
 
 export const SearchButton: React.FC<Props> = ({ modalId }) => {
-  const router = useRouter();
   const modal = useModal(modalId);
   const openModalAndNavigate = React.useCallback(() => {
-    router.push('search');
     modal.show();
-  }, [modal, router]);
+  }, [modal]);
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
