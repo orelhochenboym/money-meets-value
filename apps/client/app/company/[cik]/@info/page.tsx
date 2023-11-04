@@ -20,8 +20,8 @@ export default async function Index({ params }: { params: { cik: string } }) {
   const companyInfo = await getCompanyInfo(params.cik);
 
   return (
-    <div className="flex flex-col h-fit w-fit bg-green-50 gap-2">
-      <div className="flex bg-yellow-50">
+    <div className="flex flex-col h-fit w-1/2 gap-2">
+      <div className="flex">
         <Avatar className="inline-flex h-16 w-16 select-none items-center justify-center overflow-hidden border align-middle">
           <AvatarImage className="object-contain" />
           <AvatarFallback>{companyInfo.symbol}</AvatarFallback>
