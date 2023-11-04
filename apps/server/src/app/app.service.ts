@@ -91,4 +91,17 @@ export class AppService {
 
     return data;
   }
+
+  async getSearch(symbol: string) {
+    const data = yahooFinance.search(symbol);
+
+    return data;
+  }
+
+  async getTrending() {
+    // Unlimited count
+    const data = yahooFinance.trendingSymbols('US', { count: 999999 });
+
+    return data;
+  }
 }

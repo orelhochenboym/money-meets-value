@@ -15,4 +15,14 @@ export class AppController {
   getChart(@Param('cik') cik: string) {
     return this.appService.getChart(cik);
   }
+
+  @Get('search/:symbol')
+  getSearch(@Param('symbol') symbol: string) {
+    return this.appService.getSearch(symbol);
+  }
+
+  @Get('trending')
+  getTrending() {
+    return this.appService.getTrending();
+  }
 }
