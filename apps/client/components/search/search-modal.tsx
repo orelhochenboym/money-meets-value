@@ -1,6 +1,7 @@
 'use client';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { SearchResult } from 'yahoo-finance2/dist/esm/src/modules/search';
 import { Badge } from '../ui/badge';
@@ -27,8 +28,14 @@ const getSearch = async (symbol: string) => {
   return companyInfo;
 };
 
-export const SearchModal = NiceModal.create(() => {
+export const SearchModal = NiceModal.create<{
+  stockMarket: {
+    [x: string]: string | number | null;
+  }[];
+}>(({ stockMarket }) => {
   const modal = useModal();
+  const router = useRouter();
+
   const closeModalAndNavigateBack = React.useCallback(() => {
     modal.hide();
   }, [modal]);
@@ -47,6 +54,19 @@ export const SearchModal = NiceModal.create(() => {
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
   }, [closeModalAndNavigateBack]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const data = await getSearch(search);
+      setCompanies(data);
+    };
+
+    const delay = setTimeout(() => {
+      fetchData();
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [search]);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -81,7 +101,23 @@ export const SearchModal = NiceModal.create(() => {
           })
           .map((quote) => {
             return (
-              <CommandItem key={quote.symbol}>
+              <CommandItem
+                key={quote.symbol}
+                onSelect={async (_) => {
+                  const foundCompany =
+                    stockMarket.find((stockMarketCompany) => {
+                      return Object.values(stockMarketCompany).includes(
+                        quote.symbol,
+                      );
+                    }) ?? {};
+
+                  const cik = Object.values(foundCompany).find(
+                    (value) => typeof value == 'number',
+                  );
+                  router.push(`company/${cik?.toString().padStart(10, '0')}`);
+                  modal.hide();
+                }}
+              >
                 <div className="flex w-[20%] items-center justify-center">
                   {quote.symbol}
                 </div>
