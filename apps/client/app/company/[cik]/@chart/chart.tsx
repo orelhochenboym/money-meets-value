@@ -15,8 +15,7 @@ type Props = { chart: ChartResultArray };
 
 export const Chart: React.FC<Props> = ({ chart }) => {
   return (
-    // Ratio of 3.04
-    <ResponsiveContainer width={760} height={250}>
+    <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={chart.quotes}>
         <XAxis
           dataKey="date"
@@ -31,10 +30,12 @@ export const Chart: React.FC<Props> = ({ chart }) => {
             .filter((quote) => {
               const date = new Date(quote.date);
               const month = getMonth(date);
+              const year = getYear(date);
 
               const restOfDaysOfMonth = chart.quotes
                 .filter((quote) => {
-                  return getMonth(new Date(quote.date)) === month;
+                  const date = new Date(quote.date);
+                  return getMonth(date) === month && getYear(date) === year;
                 })
                 .map((quote) => new Date(quote.date));
 
@@ -49,15 +50,14 @@ export const Chart: React.FC<Props> = ({ chart }) => {
               return date.toISOString();
             })}
         />
-        <YAxis domain={['dataMin', 'auto']} />
-        <Tooltip />
-        <Area
-          type="monotone"
-          dataKey="close"
-          stroke="#8884d8"
-          fill="#8884d8"
-          isAnimationActive={false}
+        <YAxis domain={['auto', 'auto']} />
+        <Tooltip
+          formatter={(value, name, _) => {
+            console.log(name, _);
+            return [`${Number(value).toFixed(2)}`, 'Price'];
+          }}
         />
+        <Area type="monotone" dataKey="close" stroke="#2563EB" fill="#2563EB" />
       </AreaChart>
     </ResponsiveContainer>
   );

@@ -10,7 +10,7 @@ export default function Layout({
 }) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-start gap-8">
-      <div className="flex h-fit-w-full">
+      <div className="flex h-1/3 w-full">
         {info}
         {chart}
       </div>
