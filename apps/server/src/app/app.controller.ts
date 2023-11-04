@@ -6,8 +6,13 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get(':cik')
-  getData(@Param('cik') cik: string) {
-    return this.appService.getData(cik);
+  @Get('quote/:cik')
+  getQuote(@Param('cik') cik: string) {
+    return this.appService.getQuote(cik);
+  }
+
+  @Get('chart/:cik')
+  getChart(@Param('cik') cik: string) {
+    return this.appService.getChart(cik);
   }
 }

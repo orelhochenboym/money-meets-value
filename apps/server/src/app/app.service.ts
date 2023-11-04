@@ -3,8 +3,8 @@ import {
   CompanyTickersExchangeSchema,
 } from '@money-meets-value/types';
 import { Injectable } from '@nestjs/common';
-import { fromZodError } from 'zod-validation-error';
 import yahooFinance from 'yahoo-finance2';
+import { fromZodError } from 'zod-validation-error';
 
 const getCompanies = async () => {
   const companies: CompanyTickersExchange = await fetch(
@@ -42,7 +42,7 @@ const getCompanies = async () => {
 
 @Injectable()
 export class AppService {
-  async getData(cik: string) {
+  async getQuote(cik: string) {
     const companies = await getCompanies();
     const relatedCompany = companies.find((company) => {
       for (const key in company) {
@@ -63,6 +63,31 @@ export class AppService {
       ]?.toString() ?? '';
 
     const data = yahooFinance.quote(ticker);
+
+    return data;
+  }
+
+  async getChart(cik: string) {
+    const companies = await getCompanies();
+    const relatedCompany = companies.find((company) => {
+      for (const key in company) {
+        if (company[key] !== Number(cik)) {
+          continue;
+        }
+        return true;
+      }
+    });
+
+    if (!relatedCompany) {
+      throw new Error('No company found');
+    }
+
+    const ticker =
+      relatedCompany[
+        Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
+      ]?.toString() ?? '';
+
+    const data = yahooFinance.chart(ticker, { period1: 1667236413 });
 
     return data;
   }
