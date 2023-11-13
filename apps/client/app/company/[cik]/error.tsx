@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { Button } from '../../../components/ui/button';
 
 export default function Error({
@@ -20,7 +20,7 @@ export default function Error({
   return (
     <div className="flex flex-col items-center justify-center">
       {`Sorry, we couldn't find the company related to provided cik: ${cik}`}
-      <Button onClick={() => router.push('/')}>Home Page</Button>
+      <Button onClick={() => router.replace('/')}>Home Page</Button>
     </div>
   );
 }
