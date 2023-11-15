@@ -18,9 +18,24 @@ const getCompanyInfo = async (cik: string) => {
 
 export default async function Index({ params }: { params: { cik: string } }) {
   const companyInfo = await getCompanyInfo(params.cik);
-  const formatter = new Intl.NumberFormat(undefined, {
+  const decimalFormatter = new Intl.NumberFormat(undefined, {
+    style: 'decimal',
+    signDisplay: 'exceptZero',
+    maximumFractionDigits: 2,
+  });
+  const fractionFormatter = new Intl.NumberFormat(undefined, {
+    style: 'decimal',
+    maximumFractionDigits: 2,
+  });
+  const compactFormatter = new Intl.NumberFormat(undefined, {
+    style: 'decimal',
     notation: 'compact',
     compactDisplay: 'short',
+    maximumFractionDigits: 2,
+  });
+  const percentFormatter = new Intl.NumberFormat(undefined, {
+    style: 'percent',
+    signDisplay: 'exceptZero',
     maximumFractionDigits: 2,
   });
 
@@ -46,7 +61,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
             ? companyInfo.bid
             : companyInfo.regularMarketPrice}
         </h1>
-        <span className="font-bold">{companyInfo.financialCurrency}</span>
+        <span className="font-bold">{companyInfo.currency}</span>
         <span
           className={
             companyInfo.regularMarketChange &&
@@ -55,42 +70,49 @@ export default async function Index({ params }: { params: { cik: string } }) {
               : 'text-destructive'
           }
         >
-          {companyInfo.regularMarketChange &&
-          companyInfo.regularMarketChange > 0
-            ? '+'
-            : null}
-          {companyInfo.regularMarketChange?.toFixed(2)}
+          {!companyInfo.regularMarketChange
+            ? 'N/A'
+            : decimalFormatter.format(companyInfo.regularMarketChange)}
         </span>
         <span
           className={
-            companyInfo.regularMarketChange &&
-            companyInfo.regularMarketChange > 0
+            companyInfo.regularMarketChangePercent &&
+            companyInfo.regularMarketChangePercent > 0
               ? 'text-green-500'
               : 'text-destructive'
           }
         >
-          {'('}
-          {companyInfo.regularMarketChange &&
-          companyInfo.regularMarketChange > 0
-            ? '+'
-            : undefined}
-          {`${companyInfo.regularMarketChangePercent?.toFixed(2)}%)`}
+          {`(${
+            !companyInfo.regularMarketChangePercent
+              ? 'N/A'
+              : percentFormatter.format(
+                  companyInfo.regularMarketChangePercent / 100,
+                )
+          })`}
         </span>
       </div>
       <div className="flex h-full w-full items-end justify-start gap-20">
         <div className="flex flex-col items-start">
-          <span>{companyInfo.epsForward?.toFixed(2)}</span>
+          <span>
+            {!companyInfo.epsForward
+              ? 'N/A'
+              : fractionFormatter.format(companyInfo.epsForward)}
+          </span>
           <span className="text-muted-foreground">EPS</span>
         </div>
         <div className="flex flex-col items-start">
-          <span>{companyInfo.forwardPE?.toFixed(2)}</span>
+          <span>
+            {!companyInfo.forwardPE
+              ? 'N/A'
+              : fractionFormatter.format(companyInfo.forwardPE)}
+          </span>
           <span className="text-muted-foreground">P/E</span>
         </div>
         <div className="flex flex-col items-start">
           <span>
             {!companyInfo.marketCap
               ? 'N/A'
-              : formatter.format(companyInfo.marketCap)}
+              : compactFormatter.format(companyInfo.marketCap)}
           </span>
           <span className="text-muted-foreground">Market Cap</span>
         </div>
