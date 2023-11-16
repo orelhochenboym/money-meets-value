@@ -20,7 +20,7 @@ export default function Error({
   return (
     <div className="flex flex-col items-center justify-center">
       {`Sorry, we couldn't find the company related to provided cik: ${cik}`}
-      <Button onClick={() => router.replace('/')}>Home Page</Button>
+      <Button onClick={() => router.push('/')}>Home Page</Button>
     </div>
   );
 }

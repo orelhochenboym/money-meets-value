@@ -114,9 +114,7 @@ export const SearchModal = NiceModal.create<{
                   const cik = Object.values(foundCompany).find(
                     (value) => typeof value == 'number',
                   );
-                  router.replace(
-                    `company/${cik?.toString().padStart(10, '0')}`,
-                  );
+                  router.push(`/company/${cik?.toString().padStart(10, '0')}`);
                   modal.hide();
                 }}
               >
