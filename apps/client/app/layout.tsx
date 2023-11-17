@@ -25,7 +25,7 @@ export default function RootLayout({
       >
         <body className="flex h-full w-full flex-col overflow-hidden">
           <Header />
-          <div className="flex h-full w-full flex-col overflow-hidden p-2">
+          <div className="flex h-full w-full flex-col overflow-hidden mx-auto max-w-screen-2xl">
             {search}
             {children}
           </div>
