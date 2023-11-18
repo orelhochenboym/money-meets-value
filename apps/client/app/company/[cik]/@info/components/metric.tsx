@@ -23,8 +23,7 @@ export const Metric: React.FC<MetricProps> = ({ label, value, formatter }) => {
   }
 
   return (
-    <div className="flex flex-col items-start">
-      {/* <span>{value ? formatter?.format(value) : 'N/A'}</span> */}
+    <div className="flex h-fit w-fit  flex-col items-start">
       <span>{processedValue ?? 'N/A'}</span>
       <span className="text-muted-foreground">{label}</span>
     </div>
