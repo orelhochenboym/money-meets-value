@@ -118,17 +118,17 @@ export const SearchModal = NiceModal.create<{
                   modal.hide();
                 }}
               >
-                <div className="flex w-[20%] items-center justify-center">
+                <div className="flex w-1/5 items-center justify-center">
                   {quote.symbol}
                 </div>
 
-                <div className="flex w-[60%] items-center justify-center">
+                <div className="flex w-3/5 items-center justify-center">
                   {quote.longname}
                 </div>
 
                 <Badge
                   variant={quote.exchDisp ? 'outline' : 'destructive'}
-                  className="flex w-[20%] items-center justify-center"
+                  className="flex w-1/5 items-center justify-center"
                 >
                   {quote.exchDisp ?? 'N/A'}
                 </Badge>
