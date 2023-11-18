@@ -2,7 +2,7 @@ type Props = { items: string[] };
 
 export const Breadcrumbs: React.FC<Props> = ({ items }) => {
   return (
-    <div className="flex w-full items-center h-fit gap-2 text-muted-foreground whitespace-nowrap">
+    <div className="text-muted-foreground flex h-fit w-fit items-center gap-2 whitespace-nowrap">
       {items
         .map((item, i) => <span key={i}>{item}</span>)
         .flatMap((item, i, array) =>
@@ -11,7 +11,7 @@ export const Breadcrumbs: React.FC<Props> = ({ items }) => {
                 item,
                 <div
                   key={i}
-                  className="w-1.5 h-1.5 bg-muted-foreground rounded-full"
+                  className="bg-muted-foreground h-1.5 w-1.5 rounded-full"
                 />,
               ]
             : item,
