@@ -16,7 +16,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
   const companyChart = await getCompanyChart(params.cik);
 
   return (
-    <div className="w-1/2 h-full">
+    <div className="h-full w-1/2">
       <Chart chart={companyChart} />
     </div>
   );

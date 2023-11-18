@@ -1,7 +1,7 @@
 'use client';
 
-import React, { PropsWithChildren } from 'react';
 import NiceModal from '@ebay/nice-modal-react';
+import React, { PropsWithChildren } from 'react';
 
 export const NiceModalProvider: React.FC<PropsWithChildren> = ({
   children,

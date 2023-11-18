@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import Link from 'next/link';
+import { cn } from '../lib/utils';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -8,7 +9,6 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu';
-import Link from 'next/link';
 
 export const Navbar = () => {
   return (
@@ -17,7 +17,7 @@ export const Navbar = () => {
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} text-base`}
+              className={cn(navigationMenuTriggerStyle(), 'text-base')}
             >
               Pricing
             </NavigationMenuLink>
@@ -26,7 +26,7 @@ export const Navbar = () => {
         <NavigationMenuItem>
           <Link href="/about" legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} text-base`}
+              className={cn(navigationMenuTriggerStyle(), 'text-base')}
             >
               About
             </NavigationMenuLink>

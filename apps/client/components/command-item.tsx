@@ -19,7 +19,7 @@ export const ClientCommandItem = React.forwardRef<
       className={className}
       {...props}
       onSelect={() => {
-        router.push(`company/${props.value}`);
+        router.push(`/company/${props.value}`);
         modal.hide();
       }}
     />
