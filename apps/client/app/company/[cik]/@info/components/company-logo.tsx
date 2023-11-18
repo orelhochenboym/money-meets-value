@@ -11,8 +11,8 @@ type Props = {
 
 export const CompanyLogo: React.FC<Props> = ({ companyInfo }) => {
   return (
-    <div className="h-full aspect-square">
-      <Avatar className="h-full inline-flex w-full max-w-full select-none items-center justify-center overflow-hidden border align-middle ">
+    <div className="aspect-square h-full">
+      <Avatar className="inline-flex h-full w-full max-w-full select-none items-center justify-center overflow-hidden border align-middle ">
         <AvatarImage className="object-contain" />
         <AvatarFallback>{companyInfo.symbol}</AvatarFallback>
       </Avatar>

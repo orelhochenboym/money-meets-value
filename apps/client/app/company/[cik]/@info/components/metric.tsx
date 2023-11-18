@@ -38,8 +38,8 @@ export const RangeMetric: React.FC<RangeMetricProps> = ({
   min,
 }) => {
   return (
-    <div className="flex flex-col items-start h-fit w-fit">
-      <div className="flex justify-center items-center w-fit gap-2">
+    <div className="flex h-fit w-fit flex-col items-start">
+      <div className="flex w-fit items-center justify-center gap-2">
         <span>{min}</span>
         <Range
           disabled

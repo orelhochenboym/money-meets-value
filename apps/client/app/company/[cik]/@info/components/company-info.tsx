@@ -6,8 +6,8 @@ type Props = {
 
 export const CompanyInfo: React.FC<Props> = ({ companyInfo }) => {
   return (
-    <div className="flex w-fit h-full flex-col text-left">
-      <h1 className="text-4xl font-bold whitespace-nowrap">
+    <div className="flex h-full w-fit flex-col text-left">
+      <h1 className="whitespace-nowrap text-4xl font-bold">
         {companyInfo.longName}
       </h1>
       <span className="text-muted-foreground flex gap-2">

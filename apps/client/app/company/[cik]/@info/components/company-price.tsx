@@ -13,7 +13,7 @@ export const CompanyPrice: React.FC<Props> = ({ companyInfo }) => {
           ? companyInfo.bid
           : companyInfo.regularMarketPrice}
       </h1>
-      <span className="font-bold text-sm text leading-6">
+      <span className="text text-sm font-bold leading-6">
         {companyInfo.currency}
       </span>
       <span

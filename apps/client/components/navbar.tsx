@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import Link from 'next/link';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -8,7 +8,6 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from './ui/navigation-menu';
-import Link from 'next/link';
 
 export const Navbar = () => {
   return (

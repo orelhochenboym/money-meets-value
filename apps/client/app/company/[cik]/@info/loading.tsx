@@ -1,3 +1,3 @@
 export default async function Loading() {
-  return <div className="w-full h-full">Loading Info</div>;
+  return <div className="h-full w-full">Loading Info</div>;
 }
