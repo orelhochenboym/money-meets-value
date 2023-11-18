@@ -12,7 +12,7 @@ type Props = {
 
 export const Metrics: React.FC<Props> = ({ companyInfo }) => {
   return (
-    <div className="flex h-full w-full flex-col flex-wrap content-end items-start justify-start gap-10">
+    <div className="grid h-fit w-fit grid-flow-col grid-rows-[auto,auto,auto] items-start justify-end gap-5">
       <RangeMetric
         min={companyInfo.fiftyTwoWeekLow}
         max={companyInfo.fiftyTwoWeekHigh}
