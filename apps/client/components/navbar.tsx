@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { cn } from '../lib/utils';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,7 +17,7 @@ export const Navbar = () => {
         <NavigationMenuItem>
           <Link href="/pricing" legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} text-base`}
+              className={cn(navigationMenuTriggerStyle(), 'text-base')}
             >
               Pricing
             </NavigationMenuLink>
@@ -25,7 +26,7 @@ export const Navbar = () => {
         <NavigationMenuItem>
           <Link href="/about" legacyBehavior passHref>
             <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} text-base`}
+              className={cn(navigationMenuTriggerStyle(), 'text-base')}
             >
               About
             </NavigationMenuLink>
