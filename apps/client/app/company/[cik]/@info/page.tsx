@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Quote } from 'yahoo-finance2/dist/esm/src/modules/quote';
 import { SearchResult } from 'yahoo-finance2/dist/esm/src/modules/search';
 import { Breadcrumbs } from './components/breadcrumbs';
@@ -35,7 +36,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <div className="flex flex-col h-1/3 w-full border-b border-accent gap-2">
+    <div className="border-accent flex h-1/3 w-full flex-col justify-between gap-4 border-b">
       <Breadcrumbs
         items={[
           foundCompanySearch?.exchDisp,
@@ -43,15 +44,22 @@ export default async function Index({ params }: { params: { cik: string } }) {
           foundCompanySearch?.industry,
         ]}
       />
-      <div className="w-full h-full flex">
-        <div className="flex flex-col w-fit h-full">
-          <div className="flex h-fit w-fit gap-2">
+      <div className="flex h-fit w-full justify-between">
+        <div className="flex h-fit w-fit flex-col">
+          <div className="flex h-fit w-full items-center justify-start gap-2">
             <CompanyLogo companyInfo={companyInfo} />
             <CompanyInfo companyInfo={companyInfo} />
           </div>
           <CompanyPrice companyInfo={companyInfo} />
         </div>
         <Metrics companyInfo={companyInfo} />
+      </div>
+      <div className="flex h-fit w-fit gap-4">
+        <Link href="#">Summary</Link>
+        <Link href="#">Financials</Link>
+        <Link href="#">Ratios</Link>
+        <Link href="#">Calculator</Link>
+        <Link href="#">News</Link>
       </div>
     </div>
   );
