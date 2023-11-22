@@ -13,20 +13,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '../ui/command';
-
-const getSearch = async (symbol: string) => {
-  if (!symbol) {
-    return;
-  }
-  const companyInfo: SearchResult = await fetch(
-    `http://localhost:3000/api/search/${symbol}`,
-    {
-      cache: 'no-cache',
-    },
-  ).then((res) => res.json());
-
-  return companyInfo;
-};
+import { searchSymbol } from './actions';
 
 export const SearchModal = NiceModal.create<{
   stockMarket: {
@@ -57,20 +44,7 @@ export const SearchModal = NiceModal.create<{
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await getSearch(search);
-      setCompanies(data);
-    };
-
-    const delay = setTimeout(() => {
-      fetchData();
-    }, 500);
-
-    return () => clearTimeout(delay);
-  }, [search]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSearch(search);
+      const data = await searchSymbol(search);
       setCompanies(data);
     };
 
