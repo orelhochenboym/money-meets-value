@@ -48,7 +48,7 @@ export const Header: React.FC = async () => {
   const companies = await getCompanies();
 
   return (
-    <div className="border-accent flex items-center justify-between border-b-2 p-3">
+    <div className="border-accent flex w-full items-center justify-between border-b-2 p-3">
       <Logo />
       <Navbar />
       <SearchButton modalId={modalId} />

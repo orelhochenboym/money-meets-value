@@ -23,9 +23,9 @@ export default function RootLayout({
         lang="en"
         className={`${inter.className} h-full w-full overflow-hidden text-center`}
       >
-        <body className="flex h-full w-full flex-col overflow-hidden">
+        <body className="flex h-full w-full flex-col items-center overflow-hidden">
           <Header />
-          <div className="mx-auto flex h-full w-full max-w-screen-2xl flex-col overflow-hidden pt-2">
+          <div className="flex h-full w-4/5 flex-col overflow-auto pt-2">
             {search}
             {children}
           </div>

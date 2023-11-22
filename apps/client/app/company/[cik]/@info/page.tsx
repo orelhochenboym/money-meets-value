@@ -35,7 +35,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
   );
 
   return (
-    <div className="border-accent flex h-1/3 w-full flex-col justify-between gap-4 border-b">
+    <div className="border-accent flex h-fit w-full flex-col justify-between gap-4 border-b">
       <Breadcrumbs
         items={[
           foundCompanySearch?.exchDisp,
