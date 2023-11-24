@@ -45,7 +45,9 @@ export const SearchModal = NiceModal.create<{
   React.useEffect(() => {
     const fetchData = async () => {
       const data = await searchSymbol(search);
-      setCompanies(data);
+      if (data) {
+        setCompanies(data);
+      }
     };
 
     const delay = setTimeout(() => {
