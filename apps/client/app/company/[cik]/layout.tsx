@@ -2,6 +2,7 @@ export default function Layout({
   table,
   info,
   chart,
+  children,
 }: {
   children: React.ReactNode;
   table: React.ReactNode;
@@ -9,10 +10,9 @@ export default function Layout({
   chart: React.ReactNode;
 }) {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start">
+    <div className="flex h-full w-full flex-col items-center justify-start overflow-visible">
       {info}
-      {chart}
-      {table}
+      <div className="h-full w-full overflow-visible pt-4">{children}</div>
     </div>
   );
 }
