@@ -1,11 +1,11 @@
 import { getCompanies } from '@money-meets-value/utils';
-import Link from 'next/link';
 import yahooFinance from 'yahoo-finance2';
 import { Breadcrumbs } from './components/breadcrumbs';
 import { CompanyInfo } from './components/company-info';
 import { CompanyLogo } from './components/company-logo';
 import { CompanyPrice } from './components/company-price';
 import { Metrics } from './components/metrics';
+import { Navbar } from './components/navbar';
 
 export default async function Index({ params }: { params: { cik: string } }) {
   const companies = await getCompanies();
@@ -53,13 +53,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
         </div>
         <Metrics companyInfo={quote} />
       </div>
-      <div className="flex h-fit w-fit gap-4">
-        <Link href="#">Summary</Link>
-        <Link href="#">Financials</Link>
-        <Link href="#">Ratios</Link>
-        <Link href="#">Calculator</Link>
-        <Link href="#">News</Link>
-      </div>
+      <Navbar cik={params.cik} />
     </div>
   );
 }
