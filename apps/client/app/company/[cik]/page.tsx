@@ -159,7 +159,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
             .map((news) => {
               return (
                 <Link
-                  className="hover:bg-accent flex w-full flex-col gap-2 rounded-lg p-4 text-start focus-within:ring-2 focus-within:ring-inset"
+                  className="hover:bg-accent flex w-full flex-col gap-2 rounded-lg p-4 text-start focus-within:outline-none focus-within:ring-2 focus-within:ring-inset"
                   key={news.uuid}
                   rel="noopener noreferrer"
                   target="_blank"
