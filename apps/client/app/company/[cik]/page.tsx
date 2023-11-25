@@ -1,7 +1,9 @@
 import { getCompanies } from '@money-meets-value/utils';
+import Link from 'next/link';
 import yahooFinance from 'yahoo-finance2';
+import { fractionFormatter } from '../../../../client/lib/utils';
 import { Chart } from '../../../components/chart';
-import { Card } from '../../../components/ui/card';
+import { Card, CardContent } from '../../../components/ui/card';
 
 export default async function Index({ params }: { params: { cik: string } }) {
   const companies = await getCompanies();
@@ -28,9 +30,116 @@ export default async function Index({ params }: { params: { cik: string } }) {
     interval: '1mo',
   });
 
+  const quoteSummary = await yahooFinance.quoteSummary(ticker, {
+    modules: [
+      'assetProfile',
+      'calendarEvents',
+      'defaultKeyStatistics',
+      'earningsTrend',
+      'financialData',
+      'fundOwnership',
+      'fundPerformance',
+      'fundProfile',
+      'insiderHolders',
+      'insiderTransactions',
+      'institutionOwnership',
+      'majorHoldersBreakdown',
+      'price',
+      'quoteType',
+      'summaryDetail',
+      'topHoldings',
+    ],
+  });
+
   return (
-    <Card className="h-full w-full overflow-visible p-4">
-      <Chart chart={companyChart}></Chart>
-    </Card>
+    <div className="grid h-fit w-full grid-cols-3 gap-4 overflow-visible">
+      <Card className="col-span-3 h-fit w-full overflow-visible p-4">
+        <div className="h-96 w-full">
+          <Chart chart={companyChart} />
+        </div>
+      </Card>
+      <Card className="col-span-2 h-full w-full">
+        <div className="flex h-fit w-full justify-start border-b p-2 font-medium">
+          Company Description
+        </div>
+        <CardContent className="grid grid-flow-row grid-cols-[auto,auto,auto,auto] gap-4 p-4">
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">CEO</dt>
+            <dd className="text-sm">
+              {quoteSummary.assetProfile?.companyOfficers.find((officer) =>
+                officer.title.toUpperCase().includes('CEO'),
+              )?.name ?? 'N/A'}
+            </dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Full-Time Employees
+            </dt>
+            <dd className="text-sm">
+              {fractionFormatter.format(
+                quoteSummary.assetProfile?.fullTimeEmployees ?? NaN,
+              )}
+            </dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Sector
+            </dt>
+            <dd className="text-sm">{quoteSummary.assetProfile?.sectorDisp}</dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Industry
+            </dt>
+            <dd className="text-sm">
+              {quoteSummary.assetProfile?.industryDisp}
+            </dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Address
+            </dt>
+            <dd className="text-sm">
+              {quoteSummary.assetProfile?.address1 ??
+                quoteSummary.assetProfile?.address2 ??
+                quoteSummary.assetProfile?.address3}
+            </dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              IPO Date
+            </dt>
+            <dd className="text-sm">
+              {quoteSummary.assetProfile?.industryDisp}
+            </dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">CIK</dt>
+            <dd className="text-sm">{params.cik}</dd>
+          </div>
+          <div className="flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Website
+            </dt>
+            <Link
+              href={quoteSummary.assetProfile?.website ?? ''}
+              className="text-sm"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {quoteSummary.assetProfile?.website}
+            </Link>
+          </div>
+          <div className="col-span-full flex flex-col items-start gap-1 text-start">
+            <dt className="text-muted-foreground text-sm font-medium">
+              Business Summary
+            </dt>
+            <dd className="columns-2 gap-8 text-justify text-sm">
+              {quoteSummary.assetProfile?.longBusinessSummary}
+            </dd>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
