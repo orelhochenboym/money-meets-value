@@ -24,7 +24,8 @@ export default async function Index({ params }: { params: { cik: string } }) {
     ]?.toString() ?? '';
 
   const companyChart = await yahooFinance.chart(ticker, {
-    period1: 1667236413,
+    period1: 0,
+    interval: '1mo',
   });
 
   return (

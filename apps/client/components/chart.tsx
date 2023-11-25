@@ -1,6 +1,5 @@
 'use client';
 
-import { getMonth, isEqual, min } from 'date-fns';
 import getYear from 'date-fns/getYear';
 import {
   Area,
@@ -33,27 +32,7 @@ export const Chart: React.FC<Props> = ({ chart }) => {
 
             return `${month} ${year}`;
           }}
-          ticks={chart.quotes
-            .filter((quote) => {
-              const month = getMonth(quote.date);
-              const year = getYear(quote.date);
-
-              const restOfDaysOfMonth = chart.quotes
-                .filter(
-                  (quote) =>
-                    getMonth(quote.date) === month &&
-                    getYear(quote.date) === year,
-                )
-                .map((quote) => quote.date);
-
-              const minTradingDateOfMonth = min(restOfDaysOfMonth);
-
-              return (
-                getMonth(quote.date) % 2 === 0 &&
-                isEqual(quote.date, minTradingDateOfMonth)
-              );
-            })
-            .map((quote) => quote.date.getTime())}
+          ticks={chart.quotes.map((quote) => quote.date.getTime())}
         />
         <YAxis domain={['auto', 'auto']} />
         <Tooltip
