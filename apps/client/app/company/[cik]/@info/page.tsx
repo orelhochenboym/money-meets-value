@@ -28,6 +28,9 @@ export default async function Index({ params }: { params: { cik: string } }) {
     ]?.toString() ?? '';
 
   const quote = await yahooFinance.quote(ticker);
+  const quoteSummary = await yahooFinance.quoteSummary(ticker, {
+    modules: ['assetProfile'],
+  });
   const search = await yahooFinance.search(quote.symbol);
 
   const foundCompanySearch = search.quotes.find(
@@ -46,7 +49,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
       <div className="flex h-fit w-full justify-between">
         <div className="flex h-fit w-fit flex-col">
           <div className="flex h-fit w-full items-center justify-start gap-2">
-            <CompanyLogo companyInfo={quote} />
+            <CompanyLogo quote={quote} quoteSummary={quoteSummary} />
             <CompanyInfo companyInfo={quote} />
           </div>
           <CompanyPrice companyInfo={quote} />
