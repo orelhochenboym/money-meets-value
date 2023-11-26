@@ -12,10 +12,8 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
-  search,
 }: {
   children: React.ReactNode;
-  search: React.ReactNode;
 }) {
   return (
     <NiceModalProvider>
@@ -26,7 +24,6 @@ export default function RootLayout({
         <body className="flex h-full w-full flex-col items-center overflow-auto">
           <Header />
           <div className="flex h-full w-4/5 flex-col overflow-visible pt-2">
-            {search}
             {children}
           </div>
         </body>
