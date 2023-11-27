@@ -1,8 +1,8 @@
 import { NavLink } from './nav-link';
 
-type Props = { cik: string };
+type Props = { cik: string | null };
 
-export const Navbar: React.FC<Props> = ({ cik }) => {
+export const Navbar: React.FC<Props> = ({ cik = null }) => {
   return (
     <div className="text-muted-foreground flex h-fit w-fit gap-5">
       <NavLink label="Summary" href="" />

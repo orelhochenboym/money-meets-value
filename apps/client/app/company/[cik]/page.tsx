@@ -6,7 +6,11 @@ import { fractionFormatter } from '../../../../client/lib/utils';
 import { Chart } from '../../../components/chart';
 import { Card, CardContent } from '../../../components/ui/card';
 
-export default async function Index({ params }: { params: { cik: string } }) {
+export default async function Index({
+  params = { cik: null },
+}: {
+  params: { cik: string | null };
+}) {
   const companies = await getCompanies();
   const relatedCompany = companies.find((company) => {
     for (const key in company) {

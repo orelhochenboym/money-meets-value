@@ -7,7 +7,11 @@ import { CompanyPrice } from './components/company-price';
 import { Metrics } from './components/metrics';
 import { Navbar } from './components/navbar';
 
-export default async function Index({ params }: { params: { cik: string } }) {
+export default async function Index({
+  params = { cik: null },
+}: {
+  params: { cik: string | null };
+}) {
   const companies = await getCompanies();
   const relatedCompany = companies.find((company) => {
     for (const key in company) {

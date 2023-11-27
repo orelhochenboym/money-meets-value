@@ -11,7 +11,7 @@ export const metadata = {
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
-  children,
+  children = null,
 }: {
   children: React.ReactNode;
 }) {

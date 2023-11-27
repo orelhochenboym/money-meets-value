@@ -1,6 +1,6 @@
 export default function Layout({
-  info,
-  children,
+  info = null,
+  children = null,
 }: {
   children: React.ReactNode;
   table: React.ReactNode;
