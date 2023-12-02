@@ -1,4 +1,4 @@
-import { getCompanies } from '@money-meets-value/utils';
+import { findCompany, getCompanies } from '@money-meets-value/utils';
 import { formatDistanceToNowStrict } from 'date-fns';
 import Link from 'next/link';
 import yahooFinance from 'yahoo-finance2';
@@ -8,23 +8,11 @@ import { Card, CardContent } from '../../../components/ui/card';
 
 export default async function Index({ params }: { params: { cik: string } }) {
   const companies = await getCompanies();
-  const relatedCompany = companies.find((company) => {
-    for (const key in company) {
-      if (company[key] !== Number(params.cik)) {
-        continue;
-      }
-      return true;
-    }
-  });
+  const ticker = findCompany(companies, 'ticker', params.cik)?.toString();
 
-  if (!relatedCompany) {
-    throw new Error('No company found');
+  if (!ticker) {
+    throw new Error('Cant find company');
   }
-
-  const ticker =
-    relatedCompany[
-      Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
-    ]?.toString() ?? '';
 
   const companyChart = await yahooFinance.chart(ticker, {
     period1: 0,

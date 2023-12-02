@@ -1,4 +1,5 @@
 import { CompanyFacts, CompanyFactsSchema } from '@money-meets-value/types';
+import { fromZodError } from 'zod-validation-error';
 import {
   Table,
   TableBody,
@@ -7,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from '../../../../components/ui/table';
-import { fromZodError } from 'zod-validation-error';
 
 const getCompanyFacts = async (cik: string) => {
   const companyfacts: CompanyFacts = await fetch(
@@ -37,7 +37,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
         <TableHeader className="sticky top-0 backdrop-blur">
           <TableRow className="text-base">
             <TableHead>
-              Metric{' '}
+              Metric
               <span className="text-xs">
                 (In Millions of $ (USD) except per share items)
               </span>
