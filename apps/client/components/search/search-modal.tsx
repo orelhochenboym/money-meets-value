@@ -23,7 +23,7 @@ export const SearchModal = NiceModal.create<{
   const modal = useModal();
   const router = useRouter();
 
-  const closeModalAndNavigateBack = React.useCallback(() => {
+  const closeModal = React.useCallback(() => {
     modal.hide();
   }, [modal]);
 
@@ -34,13 +34,13 @@ export const SearchModal = NiceModal.create<{
     const down = (e: KeyboardEvent) => {
       if (e.code === 'Slash') {
         e.preventDefault();
-        closeModalAndNavigateBack();
+        closeModal();
       }
     };
 
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
-  }, [closeModalAndNavigateBack]);
+  }, [closeModal]);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +60,7 @@ export const SearchModal = NiceModal.create<{
   return (
     <CommandDialog
       open={modal.visible}
-      onOpenChange={closeModalAndNavigateBack}
+      onOpenChange={closeModal}
       shouldFilter={false}
     >
       <CommandInput
@@ -78,6 +78,7 @@ export const SearchModal = NiceModal.create<{
           .map((quote) => {
             return (
               <CommandItem
+                className="cursor-pointer"
                 key={quote.symbol}
                 onSelect={async (_) => {
                   const foundCompany =

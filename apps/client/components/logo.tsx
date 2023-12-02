@@ -8,7 +8,7 @@ const merriweather = Merriweather({
 });
 
 export const Logo = () => (
-  <Link href={'/'}>
+  <Link href="/">
     <Label
       className={`${merriweather.className} text-primary cursor-pointer select-none text-4xl font-bold`}
     >
