@@ -3,13 +3,18 @@ import { NavLink } from './nav-link';
 type Props = { cik: string };
 
 export const Navbar: React.FC<Props> = ({ cik }) => {
+  const links = [
+    { label: 'Summary', href: '' },
+    { label: 'Financials', href: `${cik}/financials` },
+    { label: 'Ratios', href: `${cik}/ratios` },
+    { label: 'Calculator', href: `${cik}/calculators` },
+    { label: 'News', href: `${cik}/news` },
+  ];
   return (
     <div className="text-muted-foreground flex h-fit w-fit gap-5">
-      <NavLink label="Summary" href="" />
-      <NavLink label="Financials" href={`${cik}/financials`} />
-      <NavLink label="Ratios" href={`${cik}/ratios`} />
-      <NavLink label="Calculators" href={`${cik}/calculators`} />
-      <NavLink label="News" href={`${cik}/news`} />
+      {links.map((link) => (
+        <NavLink {...link} key={link.label} />
+      ))}
     </div>
   );
 };
