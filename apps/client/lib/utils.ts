@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// TODO: create builder for these
 export const decimalFormatter = new Intl.NumberFormat(undefined, {
   style: 'decimal',
   signDisplay: 'exceptZero',
