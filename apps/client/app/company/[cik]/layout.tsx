@@ -10,7 +10,6 @@ export default function Layout({
   info: React.ReactNode;
   params: { cik: string | null };
 }) {
-  console.log(params);
   return (
     <div className="flex h-full w-full flex-col items-center justify-start overflow-visible">
       {info}
