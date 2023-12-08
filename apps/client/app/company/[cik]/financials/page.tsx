@@ -1,4 +1,5 @@
 import { CompanyFacts, CompanyFactsSchema } from '@money-meets-value/types';
+import { fromZodError } from 'zod-validation-error';
 import {
   Table,
   TableBody,
@@ -7,9 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from '../../../../components/ui/table';
-import { fromZodError } from 'zod-validation-error';
 
-const getCompanyFacts = async (cik: string) => {
+const getCompanyFacts = async (cik: string | null) => {
+  if (!cik) {
+    throw new Error('No Cik Provided');
+  }
+
   const companyfacts: CompanyFacts = await fetch(
     `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`,
     { cache: 'no-cache' },
@@ -25,7 +29,11 @@ const getCompanyFacts = async (cik: string) => {
   return companyfacts;
 };
 
-export default async function Index({ params }: { params: { cik: string } }) {
+export default async function Index({
+  params = { cik: null },
+}: {
+  params: { cik: string | null };
+}) {
   const companyfacts = await getCompanyFacts(params.cik);
   const tenLastYears = [...Array(10).keys()].map(
     (_, i) => new Date().getFullYear() - 1 - i,
@@ -37,7 +45,7 @@ export default async function Index({ params }: { params: { cik: string } }) {
         <TableHeader className="sticky top-0 backdrop-blur">
           <TableRow className="text-base">
             <TableHead>
-              Metric{' '}
+              Metric
               <span className="text-xs">
                 (In Millions of $ (USD) except per share items)
               </span>

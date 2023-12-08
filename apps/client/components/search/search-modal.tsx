@@ -13,20 +13,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '../ui/command';
-
-const getSearch = async (symbol: string) => {
-  if (!symbol) {
-    return;
-  }
-  const companyInfo: SearchResult = await fetch(
-    `http://localhost:3000/api/search/${symbol}`,
-    {
-      cache: 'no-cache',
-    },
-  ).then((res) => res.json());
-
-  return companyInfo;
-};
+import { searchSymbol } from './actions';
 
 export const SearchModal = NiceModal.create<{
   stockMarket: {
@@ -36,7 +23,7 @@ export const SearchModal = NiceModal.create<{
   const modal = useModal();
   const router = useRouter();
 
-  const closeModalAndNavigateBack = React.useCallback(() => {
+  const closeModal = React.useCallback(() => {
     modal.hide();
   }, [modal]);
 
@@ -47,31 +34,20 @@ export const SearchModal = NiceModal.create<{
     const down = (e: KeyboardEvent) => {
       if (e.code === 'Slash') {
         e.preventDefault();
-        closeModalAndNavigateBack();
+        closeModal();
       }
     };
 
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
-  }, [closeModalAndNavigateBack]);
+  }, [closeModal]);
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await getSearch(search);
-      setCompanies(data);
-    };
-
-    const delay = setTimeout(() => {
-      fetchData();
-    }, 500);
-
-    return () => clearTimeout(delay);
-  }, [search]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await getSearch(search);
-      setCompanies(data);
+      const data = await searchSymbol(search);
+      if (data) {
+        setCompanies(data);
+      }
     };
 
     const delay = setTimeout(() => {
@@ -84,7 +60,7 @@ export const SearchModal = NiceModal.create<{
   return (
     <CommandDialog
       open={modal.visible}
-      onOpenChange={closeModalAndNavigateBack}
+      onOpenChange={closeModal}
       shouldFilter={false}
     >
       <CommandInput
@@ -102,6 +78,7 @@ export const SearchModal = NiceModal.create<{
           .map((quote) => {
             return (
               <CommandItem
+                className="cursor-pointer"
                 key={quote.symbol}
                 onSelect={async (_) => {
                   const foundCompany =

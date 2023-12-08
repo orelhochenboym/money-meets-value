@@ -1,65 +1,46 @@
-import Link from 'next/link';
-import { Quote } from 'yahoo-finance2/dist/esm/src/modules/quote';
-import { SearchResult } from 'yahoo-finance2/dist/esm/src/modules/search';
+import { findCompany, getCompanies } from '@money-meets-value/utils';
+import { Suspense } from 'react';
 import { Breadcrumbs } from './components/breadcrumbs';
 import { CompanyInfo } from './components/company-info';
 import { CompanyLogo } from './components/company-logo';
 import { CompanyPrice } from './components/company-price';
 import { Metrics } from './components/metrics';
 
-const getCompanyQuote = async (cik: string) => {
-  const companyInfo: Quote = await fetch(
-    `http://localhost:3000/api/quote/${cik}`,
-    {
-      cache: 'no-cache',
-    },
-  ).then((res) => res.json());
+export default async function Index({
+  params = { cik: null },
+}: {
+  params: { cik: string | null };
+}) {
+  if (!params.cik) {
+    throw new Error(`Didn't provide cik`);
+  }
 
-  return companyInfo;
-};
-const getCompanySearch = async (symbol: string) => {
-  const companySearch: SearchResult = await fetch(
-    `http://localhost:3000/api/search/${symbol}`,
-    {
-      cache: 'no-cache',
-    },
-  ).then((res) => res.json());
+  const companies = await getCompanies();
 
-  return companySearch;
-};
+  const ticker = findCompany(companies, 'ticker', params.cik)?.toString();
 
-export default async function Index({ params }: { params: { cik: string } }) {
-  const companyInfo = await getCompanyQuote(params.cik);
-  const companySearch = await getCompanySearch(companyInfo.symbol);
-  const foundCompanySearch = companySearch.quotes.find(
-    (quote) => companyInfo.symbol === quote.symbol,
-  );
+  if (!ticker) {
+    throw new Error('No Company Found');
+  }
 
   return (
-    <div className="border-accent flex h-1/3 w-full flex-col justify-between gap-4 border-b">
-      <Breadcrumbs
-        items={[
-          foundCompanySearch?.exchDisp,
-          foundCompanySearch?.sector,
-          foundCompanySearch?.industry,
-        ]}
-      />
+    <div className=" flex h-fit w-full flex-col justify-between gap-4">
+      <Suspense fallback={<div>Loading Breadcrumbs...</div>}>
+        <Breadcrumbs ticker={ticker} />
+      </Suspense>
       <div className="flex h-fit w-full justify-between">
         <div className="flex h-fit w-fit flex-col">
           <div className="flex h-fit w-full items-center justify-start gap-2">
-            <CompanyLogo companyInfo={companyInfo} />
-            <CompanyInfo companyInfo={companyInfo} />
+            <Suspense fallback={<div>Loading Logo...</div>}>
+              <CompanyLogo ticker={ticker} />
+            </Suspense>
+            <Suspense fallback={<div>Loading Company Info...</div>}>
+              <CompanyInfo ticker={ticker} />
+            </Suspense>
           </div>
-          <CompanyPrice companyInfo={companyInfo} />
+          <CompanyPrice ticker={ticker} />
         </div>
-        <Metrics companyInfo={companyInfo} />
-      </div>
-      <div className="flex h-fit w-fit gap-4">
-        <Link href="#">Summary</Link>
-        <Link href="#">Financials</Link>
-        <Link href="#">Ratios</Link>
-        <Link href="#">Calculator</Link>
-        <Link href="#">News</Link>
+        <Metrics ticker={ticker} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { getMonth, getYear, isEqual, min } from 'date-fns';
+import getYear from 'date-fns/getYear';
 import {
   Area,
   AreaChart,
@@ -13,7 +13,7 @@ import { ChartResultArray } from 'yahoo-finance2/dist/esm/src/modules/chart';
 
 type Props = { chart: ChartResultArray };
 
-export const Chart: React.FC<Props> = ({ chart }) => {
+export const ClientChart: React.FC<Props> = ({ chart }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={chart.quotes}>
@@ -32,29 +32,7 @@ export const Chart: React.FC<Props> = ({ chart }) => {
 
             return `${month} ${year}`;
           }}
-          ticks={chart.quotes
-            .filter((quote) => {
-              const date = new Date(quote.date);
-              const month = getMonth(date);
-              const year = getYear(date);
-
-              const restOfDaysOfMonth = chart.quotes
-                .filter((quote) => {
-                  const date = new Date(quote.date);
-                  return getMonth(date) === month && getYear(date) === year;
-                })
-                .map((quote) => new Date(quote.date));
-
-              const minTradingDateOfMonth = min(restOfDaysOfMonth);
-
-              return (
-                getMonth(date) % 2 === 0 && isEqual(date, minTradingDateOfMonth)
-              );
-            })
-            .map((quote) => {
-              const date = new Date(quote.date);
-              return date.toISOString();
-            })}
+          ticks={chart.quotes.map((quote) => quote.date.getTime())}
         />
         <YAxis domain={['auto', 'auto']} />
         <Tooltip
