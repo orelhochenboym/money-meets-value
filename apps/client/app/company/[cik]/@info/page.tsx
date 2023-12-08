@@ -1,4 +1,4 @@
-import { getCompanies } from '@money-meets-value/utils';
+import { findCompany, getCompanies } from '@money-meets-value/utils';
 import yahooFinance from 'yahoo-finance2';
 import { Breadcrumbs } from './components/breadcrumbs';
 import { CompanyInfo } from './components/company-info';
@@ -13,23 +13,12 @@ export default async function Index({
   params: { cik: string | null };
 }) {
   const companies = await getCompanies();
-  const relatedCompany = companies.find((company) => {
-    for (const key in company) {
-      if (company[key] !== Number(params.cik)) {
-        continue;
-      }
-      return true;
-    }
-  });
 
-  if (!relatedCompany) {
-    throw new Error('No company found');
+  const ticker = findCompany(companies, 'ticker', params.cik)?.toString();
+
+  if (!ticker) {
+    throw new Error('No Company Found');
   }
-
-  const ticker =
-    relatedCompany[
-      Object.keys(relatedCompany).find((key) => key === 'ticker') ?? ''
-    ]?.toString() ?? '';
 
   const quote = await yahooFinance.quote(ticker);
   const quoteSummary = await yahooFinance.quoteSummary(ticker, {

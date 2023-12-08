@@ -9,7 +9,7 @@ type Props = { modalId: string };
 
 export const SearchButton: React.FC<Props> = ({ modalId }) => {
   const modal = useModal(modalId);
-  const openModalAndNavigate = React.useCallback(() => {
+  const openModal = React.useCallback(() => {
     modal.show();
   }, [modal]);
 
@@ -17,13 +17,13 @@ export const SearchButton: React.FC<Props> = ({ modalId }) => {
     const down = (e: KeyboardEvent) => {
       if (e.code === 'Slash') {
         e.preventDefault();
-        openModalAndNavigate();
+        openModal();
       }
     };
 
     document.addEventListener('keydown', down);
     return () => document.removeEventListener('keydown', down);
-  }, [openModalAndNavigate]);
+  }, [openModal]);
 
   return (
     <Button
@@ -31,7 +31,7 @@ export const SearchButton: React.FC<Props> = ({ modalId }) => {
       className={cn(
         'text-muted-foreground relative w-full justify-start text-sm sm:pr-12 md:w-40 lg:w-64',
       )}
-      onClick={openModalAndNavigate}
+      onClick={openModal}
     >
       <span className="hidden lg:inline-flex">Search ticker or CIK</span>
       <span className="inline-flex lg:hidden">Search...</span>

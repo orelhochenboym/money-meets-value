@@ -1,12 +1,12 @@
 import { Range } from '../../../../../components/ui/range';
 
-type MetricProps = {
+export type MetricProps = {
   label: string;
   value?: number | Date;
   formatter: Intl.NumberFormat;
 };
 
-type RangeMetricProps = {
+export type RangeMetricProps = {
   min?: number;
   max?: number;
   label: string;

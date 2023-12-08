@@ -45,7 +45,7 @@ export default async function Index({
         <TableHeader className="sticky top-0 backdrop-blur">
           <TableRow className="text-base">
             <TableHead>
-              Metric{' '}
+              Metric
               <span className="text-xs">
                 (In Millions of $ (USD) except per share items)
               </span>
