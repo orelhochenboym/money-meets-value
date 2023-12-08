@@ -6,7 +6,6 @@ export default function Layout({
   params,
 }: {
   children: React.ReactNode;
-  table: React.ReactNode;
   info: React.ReactNode;
   params: { cik: string | null };
 }) {

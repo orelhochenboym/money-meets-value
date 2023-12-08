@@ -9,7 +9,7 @@ export const NavLink: React.FC<LinkProps & Props> = (props) => {
   return (
     <Link
       className={`border-background hover:border-muted-foreground border-b py-2 px-1 text-lg ${
-        pathname.includes(props.href.toString())
+        pathname === props.href.toString()
           ? 'text-primary border-primary hover:border-primary'
           : null
       }`}
