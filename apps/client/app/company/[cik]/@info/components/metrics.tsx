@@ -1,4 +1,4 @@
-import { Quote } from 'yahoo-finance2/dist/esm/src/modules/quote';
+import yahooFinance from 'yahoo-finance2';
 import {
   compactFormatter,
   fractionFormatter,
@@ -7,43 +7,45 @@ import {
 import { Metric, MetricProps, RangeMetric, RangeMetricProps } from './metric';
 
 type Props = {
-  companyInfo: Quote;
+  ticker: string;
 };
 
-export const Metrics: React.FC<Props> = ({ companyInfo }) => {
+export const Metrics: React.FC<Props> = async ({ ticker }) => {
+  const quote = await yahooFinance.quote(ticker);
+
   const rangeMetrics: RangeMetricProps[] = [
     {
-      min: companyInfo.fiftyTwoWeekLow,
-      max: companyInfo.fiftyTwoWeekHigh,
-      value: companyInfo.regularMarketPrice,
+      min: quote.fiftyTwoWeekLow,
+      max: quote.fiftyTwoWeekHigh,
+      value: quote.regularMarketPrice,
       label: '52 Week Range',
     },
     {
-      min: companyInfo.regularMarketDayLow,
-      max: companyInfo.regularMarketDayHigh,
-      value: companyInfo.regularMarketPrice,
+      min: quote.regularMarketDayLow,
+      max: quote.regularMarketDayHigh,
+      value: quote.regularMarketPrice,
       label: 'Day Range',
     },
   ];
 
   const metrics: MetricProps[] = [
     {
-      value: companyInfo.epsForward,
+      value: quote.epsForward,
       label: 'EPS',
       formatter: fractionFormatter,
     },
     {
-      value: companyInfo.forwardPE,
+      value: quote.forwardPE,
       label: 'P/E',
       formatter: fractionFormatter,
     },
     {
-      value: companyInfo.marketCap,
+      value: quote.marketCap,
       label: 'Market Cap',
       formatter: compactFormatter,
     },
     {
-      value: companyInfo.dividendYield / 100,
+      value: quote.dividendYield / 100,
       label: 'Dividend Yield',
       formatter: new Intl.NumberFormat(undefined, {
         ...percentFormatter.resolvedOptions(),
@@ -51,17 +53,17 @@ export const Metrics: React.FC<Props> = ({ companyInfo }) => {
       }),
     },
     {
-      value: companyInfo.dividendRate,
+      value: quote.dividendRate,
       label: 'Dividend Rate',
       formatter: fractionFormatter,
     },
     {
-      value: companyInfo.dividendDate,
+      value: quote.dividendDate,
       label: 'Dividend Date',
       formatter: fractionFormatter,
     },
     {
-      value: companyInfo.regularMarketPreviousClose,
+      value: quote.regularMarketPreviousClose,
       label: 'Previous Close',
       formatter: fractionFormatter,
     },

@@ -1,17 +1,20 @@
 import { findCompany, getCompanies } from '@money-meets-value/utils';
-import yahooFinance from 'yahoo-finance2';
+import { Suspense } from 'react';
 import { Breadcrumbs } from './components/breadcrumbs';
 import { CompanyInfo } from './components/company-info';
 import { CompanyLogo } from './components/company-logo';
 import { CompanyPrice } from './components/company-price';
 import { Metrics } from './components/metrics';
-import { Navbar } from './components/navbar';
 
 export default async function Index({
   params = { cik: null },
 }: {
   params: { cik: string | null };
 }) {
+  if (!params.cik) {
+    throw new Error(`Didn't provide cik`);
+  }
+
   const companies = await getCompanies();
 
   const ticker = findCompany(companies, 'ticker', params.cik)?.toString();
@@ -20,36 +23,25 @@ export default async function Index({
     throw new Error('No Company Found');
   }
 
-  const quote = await yahooFinance.quote(ticker);
-  const quoteSummary = await yahooFinance.quoteSummary(ticker, {
-    modules: ['assetProfile'],
-  });
-  const search = await yahooFinance.search(quote.symbol);
-
-  const foundCompanySearch = search.quotes.find(
-    (searchQuote) => quote.symbol === searchQuote.symbol,
-  );
-
   return (
-    <div className="border-accent flex h-fit w-full flex-col justify-between gap-4 border-b">
-      <Breadcrumbs
-        items={[
-          foundCompanySearch?.exchDisp,
-          foundCompanySearch?.sector,
-          foundCompanySearch?.industry,
-        ]}
-      />
+    <div className=" flex h-fit w-full flex-col justify-between gap-4">
+      <Suspense fallback={<div>Loading Breadcrumbs...</div>}>
+        <Breadcrumbs ticker={ticker} />
+      </Suspense>
       <div className="flex h-fit w-full justify-between">
         <div className="flex h-fit w-fit flex-col">
           <div className="flex h-fit w-full items-center justify-start gap-2">
-            <CompanyLogo quote={quote} quoteSummary={quoteSummary} />
-            <CompanyInfo companyInfo={quote} />
+            <Suspense fallback={<div>Loading Logo...</div>}>
+              <CompanyLogo ticker={ticker} />
+            </Suspense>
+            <Suspense fallback={<div>Loading Company Info...</div>}>
+              <CompanyInfo ticker={ticker} />
+            </Suspense>
           </div>
-          <CompanyPrice companyInfo={quote} />
+          <CompanyPrice ticker={ticker} />
         </div>
-        <Metrics companyInfo={quote} />
+        <Metrics ticker={ticker} />
       </div>
-      <Navbar cik={params.cik} />
     </div>
   );
 }

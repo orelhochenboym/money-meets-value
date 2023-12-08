@@ -1,6 +1,20 @@
-type Props = { items: string[] };
+import yahooFinance from 'yahoo-finance2';
 
-export const Breadcrumbs: React.FC<Props> = ({ items }) => {
+type Props = { ticker: string };
+
+export const Breadcrumbs: React.FC<Props> = async ({ ticker }) => {
+  const search = await yahooFinance.search(ticker);
+
+  const foundCompanySearch = search.quotes.find(
+    (searchQuote) => ticker === searchQuote.symbol,
+  );
+
+  const items = [
+    foundCompanySearch?.exchDisp,
+    foundCompanySearch?.sector,
+    foundCompanySearch?.industry,
+  ];
+
   return (
     <div className="text-muted-foreground flex h-fit w-fit items-center gap-2 whitespace-nowrap">
       {items.map((item, i, array) => {

@@ -11,7 +11,7 @@ export const Navbar: React.FC<Props> = ({ cik }) => {
     { label: 'News', href: `${cik}/news` },
   ];
   return (
-    <div className="text-muted-foreground flex h-fit w-fit gap-5">
+    <div className="text-muted-foreground border-accent flex h-fit w-full gap-5 border-b">
       {links.map((link) => (
         <NavLink {...link} key={link.label} />
       ))}
