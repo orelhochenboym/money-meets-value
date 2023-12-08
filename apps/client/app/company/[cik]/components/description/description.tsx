@@ -1,11 +1,32 @@
-import { QuoteSummaryResult } from 'yahoo-finance2/dist/esm/src/modules/quoteSummary-iface';
-import { Card, CardContent } from '../../../../components/ui/card';
-import { fractionFormatter } from '../../../../lib/utils';
-import { CompanyDescriptionItem } from './company-description-item';
+import yahooFinance from 'yahoo-finance2';
+import { Card, CardContent } from '../../../../../components/ui/card';
+import { fractionFormatter } from '../../../../../lib/utils';
+import { DescriptionItem } from './description-item';
 
-type Props = { quoteSummary: QuoteSummaryResult; cik: string };
+type Props = { ticker: string; cik: string };
 
-export const CompanyDescription: React.FC<Props> = ({ quoteSummary, cik }) => {
+export const Description: React.FC<Props> = async ({ ticker, cik }) => {
+  const quoteSummary = await yahooFinance.quoteSummary(ticker, {
+    modules: [
+      'assetProfile',
+      'calendarEvents',
+      'defaultKeyStatistics',
+      'earningsTrend',
+      'financialData',
+      'fundOwnership',
+      'fundPerformance',
+      'fundProfile',
+      'insiderHolders',
+      'insiderTransactions',
+      'institutionOwnership',
+      'majorHoldersBreakdown',
+      'price',
+      'quoteType',
+      'summaryDetail',
+      'topHoldings',
+    ],
+  });
+
   const companyDescriptionItems = [
     {
       label: 'CEO',
@@ -51,8 +72,9 @@ export const CompanyDescription: React.FC<Props> = ({ quoteSummary, cik }) => {
       </div>
       <CardContent className="grid grid-flow-row grid-cols-[auto,auto,auto,auto] gap-4 p-4">
         {companyDescriptionItems.map((item) => (
-          <CompanyDescriptionItem {...item} key={item.label} />
+          <DescriptionItem {...item} key={item.label} />
         ))}
+        {/* TODO: figure out what to do with the div below */}
         <div className="col-span-full flex flex-col items-start gap-1 text-start">
           <dt className="text-muted-foreground text-sm font-medium">
             Business Summary

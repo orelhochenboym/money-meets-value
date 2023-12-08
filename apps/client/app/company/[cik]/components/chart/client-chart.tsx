@@ -13,7 +13,7 @@ import { ChartResultArray } from 'yahoo-finance2/dist/esm/src/modules/chart';
 
 type Props = { chart: ChartResultArray };
 
-export const Chart: React.FC<Props> = ({ chart }) => {
+export const ClientChart: React.FC<Props> = ({ chart }) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart data={chart.quotes}>

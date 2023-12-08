@@ -1,12 +1,16 @@
 import { formatDistanceToNowStrict } from 'date-fns';
 import Link from 'next/link';
 import React from 'react';
-import { SearchResult } from 'yahoo-finance2/dist/esm/src/modules/search';
-import { Card, CardContent } from '../../../../components/ui/card';
+import yahooFinance from 'yahoo-finance2';
+import { Card, CardContent } from '../../../../../components/ui/card';
 
-type Props = { search: SearchResult };
+type Props = { ticker: string };
 
-export const CompanyNews: React.FC<Props> = ({ search }) => {
+export const News: React.FC<Props> = async ({ ticker }) => {
+  const search = await yahooFinance.search(ticker, {
+    newsCount: 99999,
+  });
+
   return (
     <Card className="col-span-2 h-full w-full">
       <div className="flex h-fit w-full justify-start border-b p-2 font-medium">
