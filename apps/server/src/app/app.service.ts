@@ -9,7 +9,6 @@ import { fromZodError } from 'zod-validation-error';
 const getCompanies = async () => {
   const companies: CompanyTickersExchange = await fetch(
     'https://www.sec.gov/files/company_tickers_exchange.json',
-    { cache: 'no-cache' },
   ).then((res) => res.json());
 
   const results = CompanyTickersExchangeSchema.safeParse(companies);
