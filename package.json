@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@clerk/nextjs": "^4.27.5",
     "@ebay/nice-modal-react": "^1.2.13",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
