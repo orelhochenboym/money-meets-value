@@ -1,7 +1,9 @@
 import { currentUser, SignOutButton } from '@clerk/nextjs';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-export const User: React.FC = async () => {
+type Props = { modalId: string };
+
+export const User: React.FC<Props> = async ({ modalId }) => {
   const user = await currentUser();
 
   return (

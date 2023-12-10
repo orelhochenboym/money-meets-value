@@ -12,21 +12,28 @@ import SearchModal from './search/search-modal';
 export const Header: React.FC = async () => {
   const searchModalId = 'search-modal';
   const authModalId = 'auth-modal';
+  const userModalId = 'user-modal';
   const companies = await getCompanies();
 
   return (
-    <div className="border-accent flex w-full items-center justify-between border-b-2 p-3">
-      <Logo />
-      <Navbar />
-      <SearchButton modalId={searchModalId} />
-      <SearchModal id={searchModalId} stockMarket={companies} />
-      <SignedOut>
-        <AuthButton modalId={authModalId} />
-      </SignedOut>
-      <SignedIn>
-        <User />
-      </SignedIn>
-      <AuthModal id={authModalId} />
+    <div className="border-accent flex w-full items-center justify-center border-b-2 p-3">
+      <div className="flex w-1/3 items-center justify-start">
+        <Logo />
+      </div>
+      <div className="flex w-1/3 items-center justify-center">
+        <Navbar />
+      </div>
+      <div className="flex w-1/3 items-center justify-end gap-4">
+        <SearchButton modalId={searchModalId} />
+        <SearchModal id={searchModalId} stockMarket={companies} />
+        <SignedOut>
+          <AuthButton modalId={authModalId} />
+        </SignedOut>
+        <SignedIn>
+          <User modalId={userModalId} />
+        </SignedIn>
+        <AuthModal id={authModalId} />
+      </div>
     </div>
   );
 };
