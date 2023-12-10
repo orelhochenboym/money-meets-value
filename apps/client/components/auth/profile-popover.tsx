@@ -1,7 +1,9 @@
 'use client';
 
+import { SignOutButton } from '@clerk/nextjs';
 import { User } from '@clerk/nextjs/dist/types/server';
 import React from 'react';
+import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { ProfileAvatar } from './profile-avatar';
 
@@ -14,7 +16,9 @@ export const ProfilePopover: React.FC<Props> = ({ user }) => {
         <ProfileAvatar user={user} />
       </PopoverTrigger>
       <PopoverContent>
-        <div>Hello</div>
+        <SignOutButton>
+          <Button variant="destructive">Sign Out</Button>
+        </SignOutButton>
       </PopoverContent>
     </Popover>
   );
