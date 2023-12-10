@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
 import { NiceModalProvider } from '../components/nice-modal-provider';
+import { ToastProvider } from '../components/toast-provider';
 import './global.css';
 
 export const metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
             <div className="flex h-full w-4/5 flex-col overflow-visible pt-2">
               {children}
             </div>
+            <ToastProvider />
           </body>
         </html>
       </NiceModalProvider>
