@@ -14,22 +14,20 @@ import {
 import { Input } from '../ui/input';
 import { CancelButton } from './cancel-button';
 
-const SignUpSchema = z.object({
+const SignInSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
 });
 
-type SignUpType = z.infer<typeof SignUpSchema>;
+type SignInType = z.infer<typeof SignInSchema>;
 
 type Props = { modalId: string };
 
-export const SignUp: React.FC<Props> = ({ modalId }) => {
+export const SignIn: React.FC<Props> = ({ modalId }) => {
   const { isLoaded, signUp, setActive } = useSignUp();
 
-  const form = useForm<SignUpType>({
-    resolver: zodResolver(SignUpSchema),
+  const form = useForm<SignInType>({
+    resolver: zodResolver(SignInSchema),
     defaultValues: { email: '' },
   });
 
@@ -44,34 +42,8 @@ export const SignUp: React.FC<Props> = ({ modalId }) => {
             console.log(`Error with ${email} ${password}`);
           },
         )}
-        className="grid grid-cols-2 gap-4"
+        className="grid w-full grid-cols-2 gap-4"
       >
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem className="flex flex-col items-start">
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input placeholder="First Name" {...field} type="text" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem className="flex flex-col items-start">
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Last Name" {...field} type="text" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="email"
@@ -100,7 +72,7 @@ export const SignUp: React.FC<Props> = ({ modalId }) => {
         />
         <CancelButton modalId={modalId} />
         <Button type="submit" variant="default">
-          Sign Up
+          Sign In
         </Button>
       </form>
     </Form>

@@ -4,7 +4,8 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import React from 'react';
 import { Dialog, DialogContent } from '../ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { SignInOAuthButtons } from './sign-in-oauth-buttons';
+import { OAuthButtons } from './oauth-buttons';
+import { SignIn } from './sign-in';
 import { SignUp } from './sign-up';
 
 export const AuthModal = NiceModal.create(() => {
@@ -17,7 +18,7 @@ export const AuthModal = NiceModal.create(() => {
     signIn: {
       value: 'sign-in',
       label: 'Sign In',
-      element: <SignUp modalId={modal.id} />,
+      element: <SignIn modalId={modal.id} />,
     },
     signUp: {
       value: 'sign-up',
@@ -29,7 +30,10 @@ export const AuthModal = NiceModal.create(() => {
   return (
     <Dialog open={modal.visible} onOpenChange={closeModal}>
       <DialogContent>
-        <Tabs defaultValue="sign-in" className="w-full">
+        <Tabs
+          defaultValue="sign-in"
+          className="flex w-full flex-col items-center justify-center gap-4"
+        >
           <TabsList className="grid w-full grid-cols-2">
             {Object.values(tabs).map((tab) => {
               return (
@@ -40,7 +44,7 @@ export const AuthModal = NiceModal.create(() => {
             })}
           </TabsList>
 
-          <SignInOAuthButtons />
+          <OAuthButtons />
 
           <div className="flex w-full items-center justify-center gap-4">
             <div className="border-muted h-fit w-full border" />
@@ -50,7 +54,7 @@ export const AuthModal = NiceModal.create(() => {
 
           {Object.values(tabs).map((tab) => {
             return (
-              <TabsContent key={tab.value} value={tab.value}>
+              <TabsContent key={tab.value} value={tab.value} className="w-3/4">
                 {tab.element}
               </TabsContent>
             );
