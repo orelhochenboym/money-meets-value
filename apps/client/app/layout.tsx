@@ -2,7 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
 import { NiceModalProvider } from '../components/nice-modal-provider';
-import { ToastProvider } from '../components/toast-provider';
+import { ToastProvider } from '../components/toast/toast-provider';
 import './global.css';
 
 export const metadata = {
