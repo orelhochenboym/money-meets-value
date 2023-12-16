@@ -1,4 +1,5 @@
-import { decimal, integer, pgTable, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, real, uuid } from 'drizzle-orm/pg-core';
+import { z } from 'zod';
 import { stocks } from './stocks';
 import { users } from './users';
 
@@ -10,6 +11,16 @@ export const holdings = pgTable('holdings', {
   stockId: uuid('stock_id')
     .notNull()
     .references(() => stocks.id),
-  quantity: integer('quantity').notNull(),
-  cost: decimal('cost', { precision: 2 }).notNull(),
+  quantity: real('quantity').notNull(),
+  cost: real('cost').notNull(),
+});
+
+export type HoldingsInsertType = typeof holdings.$inferInsert;
+
+export const HoldingsInsertSchema: z.ZodType<HoldingsInsertType> = z.object({
+  id: z.string().uuid().optional(),
+  userId: z.string().uuid(),
+  stockId: z.string().uuid(),
+  quantity: z.number().positive(),
+  cost: z.number().positive(),
 });
