@@ -1,17 +1,27 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Client } from 'pg';
-import { holdings } from './schema/holdings';
-import { stocks } from './schema/stocks';
-import { users } from './schema/users';
+import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import * as schema from './schema';
 
-const client = new Client({
-  host: 'localhost',
-  port: 5432,
-  user: 'postgres',
-  password: 'postgres',
-  database: 'mmv',
-});
+declare global {
+  // eslint-disable-next-line no-var
+  var db: PostgresJsDatabase<typeof schema>;
+}
 
-await client.connect();
+let db: PostgresJsDatabase<typeof schema>;
 
-export const db = drizzle(client, { schema: { holdings, stocks, users } });
+if (process.env.NODE_ENV === 'production') {
+  db = drizzle(postgres('postgresql://postgres:postgres@localhost:5432/mmv'), {
+    schema,
+  });
+} else {
+  if (!global.db) {
+    global.db = drizzle(
+      postgres('postgresql://postgres:postgres@localhost:5432/mmv'),
+      { schema },
+    );
+  }
+
+  db = global.db;
+}
+
+export { db };

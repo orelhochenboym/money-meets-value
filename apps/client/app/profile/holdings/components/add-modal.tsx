@@ -40,6 +40,7 @@ import {
   HoldingsInsertType,
 } from '../../../../db/schema/holdings';
 import { cn } from '../../../../lib/utils';
+import { findOrCreateStock } from './find-or-create-stock.action';
 import { submitForm } from './submit-form.action';
 import { quoteSummarySymbol } from './summary.action';
 
@@ -81,7 +82,12 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
       if (chosenSymbol) {
         const data = await quoteSummarySymbol(chosenSymbol);
         if (data && data.quoteType) {
-          form.setValue('stockId', data.quoteType.uuid);
+          const stock = await findOrCreateStock(
+            chosenSymbol,
+            data.quoteType.uuid,
+          );
+          console.log(stock);
+          form.setValue('stockId', stock[0].id);
         }
 
         // TODO: toast
@@ -99,7 +105,10 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit((data) => submitForm(data))}
+            onSubmit={form.handleSubmit((data) => {
+              submitForm(data);
+              modal.hide();
+            })}
             className="flex flex-col gap-4"
           >
             <FormField
