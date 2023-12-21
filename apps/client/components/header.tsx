@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut, currentUser } from '@clerk/nextjs';
 import { getCompanies } from '@money-meets-value/utils';
 import React from 'react';
-import { AuthButton } from './auth/auth-button';
-import { AuthModal } from './auth/auth-modal';
-import { ProfilePopover } from './auth/profile-popover';
+import { AuthButton } from './auth/auth/auth-button';
+import { AuthModal } from './auth/auth/auth-modal';
+import { ProfilePopover } from './auth/profile/profile-popover';
 import { Logo } from './logo';
 import { Navbar } from './navbar';
 import { SearchButton } from './search/search-button';

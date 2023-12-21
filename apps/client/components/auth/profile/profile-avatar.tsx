@@ -1,6 +1,6 @@
 import { User } from '@clerk/nextjs/dist/types/server';
 import React from 'react';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 
 type Props = { user: User | null };
 

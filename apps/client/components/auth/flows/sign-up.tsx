@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import {
   Form,
   FormControl,
@@ -9,9 +9,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form';
-import { Input } from '../ui/input';
-import { CancelButton } from './cancel-button';
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { CancelButton } from '../buttons/cancel-button';
 
 const SignUpSchema = z.object({
   email: z.string().email(),

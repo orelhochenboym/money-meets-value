@@ -3,7 +3,7 @@
 import { useSignUp } from '@clerk/nextjs';
 import { OAuthStrategy } from '@clerk/nextjs/dist/types/server';
 import Image from 'next/image';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 export const OAuthButtons = () => {
   const { signUp } = useSignUp();

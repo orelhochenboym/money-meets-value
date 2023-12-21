@@ -2,11 +2,11 @@
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import React from 'react';
-import { Dialog, DialogContent } from '../ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { OAuthButtons } from './oauth-buttons';
-import { SignIn } from './sign-in';
-import { SignUp } from './sign-up';
+import { Dialog, DialogContent } from '../../ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import { OAuthButtons } from '../buttons/oauth-buttons';
+import { SignIn } from '../flows/sign-in';
+import { SignUp } from '../flows/sign-up';
 
 export const AuthModal = NiceModal.create(() => {
   const modal = useModal();

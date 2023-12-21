@@ -5,8 +5,8 @@ import { User } from '@clerk/nextjs/dist/types/server';
 import { UserRound } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../../ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
 import { ProfileAvatar } from './profile-avatar';
 
 type Props = { user: User | null };
