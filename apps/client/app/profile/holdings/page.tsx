@@ -3,8 +3,8 @@ import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 import { db } from '../../../db/db';
 import { users } from '../../../db/schema/users';
-import { AddButton } from './components/add-button';
-import { AddModal } from './components/add-modal';
+import { AddButton } from './components/add/add-button';
+import { AddModal } from './components/add/add-modal';
 import { HoldingsTable } from './components/holdings-table';
 
 export default async function Index() {

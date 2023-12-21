@@ -6,21 +6,21 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { SearchResult } from 'yahoo-finance2/dist/esm/src/modules/search';
-import { searchSymbol } from '../../../../components/search/actions';
-import { Button } from '../../../../components/ui/button';
+import { searchSymbol } from '../../../../../components/search/actions';
+import { Button } from '../../../../../components/ui/button';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '../../../../components/ui/command';
+} from '../../../../../components/ui/command';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '../../../../components/ui/dialog';
+} from '../../../../../components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -28,21 +28,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../../../components/ui/form';
-import { Input } from '../../../../components/ui/input';
+} from '../../../../../components/ui/form';
+import { Input } from '../../../../../components/ui/input';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../../../components/ui/popover';
+} from '../../../../../components/ui/popover';
 import {
   HoldingsInsertSchema,
   HoldingsInsertType,
-} from '../../../../db/schema/holdings';
-import { cn } from '../../../../lib/utils';
-import { findOrCreateStock } from './find-or-create-stock.action';
-import { submitForm } from './submit-form.action';
-import { quoteSummarySymbol } from './summary.action';
+} from '../../../../../db/schema/holdings';
+import { cn } from '../../../../../lib/utils';
+import { findOrCreateStock } from '../actions/find-or-create-stock.action';
+import { submitForm } from '../actions/submit-form.action';
+import { quoteSummarySymbol } from '../actions/summary.action';
 
 type Props = { userId: string };
 
@@ -59,7 +59,7 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
 
   const form = useForm<HoldingsInsertType>({
     resolver: zodResolver(HoldingsInsertSchema),
-    defaultValues: { userId, cost: 0, quantity: 0 },
+    defaultValues: { userId },
   });
 
   React.useEffect(() => {
@@ -86,8 +86,7 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
             chosenSymbol,
             data.quoteType.uuid,
           );
-          console.log(stock);
-          form.setValue('stockId', stock[0].id);
+          form.setValue('stockId', stock.id);
         }
 
         // TODO: toast
@@ -173,7 +172,6 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
                                     onSelect={(value) => {
                                       setChosenSymbol(value);
                                       setPopoverOpen(false);
-                                      console.log(form.getValues());
                                     }}
                                   >
                                     <Check

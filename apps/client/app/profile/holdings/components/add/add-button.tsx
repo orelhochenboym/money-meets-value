@@ -3,7 +3,7 @@
 import { useModal } from '@ebay/nice-modal-react';
 import { Plus } from 'lucide-react';
 import React from 'react';
-import { Button } from '../../../../components/ui/button';
+import { Button } from '../../../../../components/ui/button';
 
 type Props = { modalId: string };
 
