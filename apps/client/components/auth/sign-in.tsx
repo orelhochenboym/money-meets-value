@@ -1,4 +1,3 @@
-import { useSignUp } from '@clerk/nextjs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,8 +23,6 @@ type SignInType = z.infer<typeof SignInSchema>;
 type Props = { modalId: string };
 
 export const SignIn: React.FC<Props> = ({ modalId }) => {
-  const { isLoaded, signUp, setActive } = useSignUp();
-
   const form = useForm<SignInType>({
     resolver: zodResolver(SignInSchema),
     defaultValues: { email: '' },
