@@ -80,7 +80,9 @@ export const AddModal = NiceModal.create<Props>(({ userId }) => {
   React.useEffect(() => {
     const fetchSummary = async () => {
       if (chosenSymbol) {
-        const data = await quoteSummarySymbol(chosenSymbol);
+        const data = await quoteSummarySymbol(chosenSymbol, {
+          modules: ['quoteType'],
+        });
         if (data && data.quoteType) {
           const stock = await findOrCreateStock(
             chosenSymbol,
