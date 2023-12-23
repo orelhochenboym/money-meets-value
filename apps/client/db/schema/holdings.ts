@@ -16,6 +16,7 @@ export const holdings = pgTable('holdings', {
 });
 
 export type HoldingsInsertType = typeof holdings.$inferInsert;
+export type HoldingsSelectType = typeof holdings.$inferSelect;
 
 export const HoldingsInsertSchema: z.ZodType<HoldingsInsertType> = z.object({
   id: z.string().uuid().optional(),
