@@ -10,6 +10,7 @@ export const Navbar: React.FC<Props> = ({ cik }) => {
     { label: 'Calculator', href: `/company/${cik}/calculators` },
     { label: 'News', href: `/company/${cik}/news` },
   ];
+
   return (
     <div className="text-muted-foreground border-accent flex h-fit w-full gap-5 border-b">
       {links.map((link) => (

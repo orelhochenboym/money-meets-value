@@ -16,7 +16,6 @@ const getCompanyFacts = async (cik: string | null) => {
 
   const companyfacts: CompanyFacts = await fetch(
     `https://data.sec.gov/api/xbrl/companyfacts/CIK${cik}.json`,
-    { cache: 'no-cache' },
   ).then((res) => res.json());
 
   const results = CompanyFactsSchema.safeParse(companyfacts);

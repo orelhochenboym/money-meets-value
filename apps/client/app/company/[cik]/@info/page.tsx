@@ -24,7 +24,7 @@ export default async function Index({
   }
 
   return (
-    <div className=" flex h-fit w-full flex-col justify-between gap-4">
+    <div className="flex h-fit w-full flex-col justify-between gap-4">
       <Suspense fallback={<div>Loading Breadcrumbs...</div>}>
         <Breadcrumbs ticker={ticker} />
       </Suspense>

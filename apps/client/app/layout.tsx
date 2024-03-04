@@ -1,6 +1,8 @@
+import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 import { Header } from '../components/header';
 import { NiceModalProvider } from '../components/nice-modal-provider';
+import { ToastProvider } from '../components/toast/toast-provider';
 import './global.css';
 
 export const metadata = {
@@ -16,18 +18,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <NiceModalProvider>
-      <html
-        lang="en"
-        className={`${inter.className} h-full w-full overflow-hidden text-center`}
-      >
-        <body className="flex h-full w-full flex-col items-center overflow-auto">
-          <Header />
-          <div className="flex h-full w-4/5 flex-col overflow-visible pt-2">
-            {children}
-          </div>
-        </body>
-      </html>
-    </NiceModalProvider>
+    <ClerkProvider>
+      <NiceModalProvider>
+        <html
+          lang="en"
+          className={`${inter.className} h-full w-full overflow-hidden text-center`}
+        >
+          <body className="flex h-full w-full flex-col items-center overflow-auto">
+            <Header />
+            <div className="flex h-full w-4/5 flex-col overflow-visible pt-4">
+              {children}
+            </div>
+            <ToastProvider />
+          </body>
+        </html>
+      </NiceModalProvider>
+    </ClerkProvider>
   );
 }
