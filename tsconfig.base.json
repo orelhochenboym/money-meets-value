@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@money-meets-value/db": ["libs/db/src/index.ts"],
       "@money-meets-value/types": ["libs/types/src/index.ts"],
       "@money-meets-value/utils": ["libs/utils/src/index.ts"]
     }

@@ -1,0 +1,50 @@
+{
+  "name": "extractor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/extractor/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/extractor",
+        "main": "apps/extractor/src/main.ts",
+        "tsConfig": "apps/extractor/tsconfig.app.json",
+        "assets": ["apps/extractor/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/extractor/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "extractor:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "extractor:build:development"
+        },
+        "production": {
+          "buildTarget": "extractor:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/extractor/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
