@@ -13,7 +13,23 @@ datasource db {
   url      = "postgresql://postgres:postgres@localhost:5432/mmv"
 }
 
-model Stock {
+model stocks {
   id     String @id @default(uuid())
   symbol String
+
+  facts facts[]
+}
+
+model facts {
+  id String @id @default(uuid())
+
+  stock_id String @db.Uuid
+  stock    stocks @relation(fields: [stock_id], references: [id])
+
+  taxonomy taxonomies
+}
+
+enum taxonomies {
+  US_GAAP
+  DEI
 }
