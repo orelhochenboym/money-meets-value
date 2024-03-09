@@ -14,22 +14,26 @@ datasource db {
 }
 
 model stocks {
-  id     String @id @default(uuid())
-  symbol String
+  id     String @id @default(uuid()) @db.Uuid
+  symbol String @unique @db.VarChar(5)
 
   facts facts[]
 }
 
 model facts {
-  id String @id @default(uuid())
+  id String @id @default(uuid()) @db.Uuid
 
-  stock_id String @db.Uuid
   stock    stocks @relation(fields: [stock_id], references: [id])
+  stock_id String @db.Uuid
+
+  name        String  @unique
+  label       String?
+  description String?
 
   taxonomy taxonomies
 }
 
 enum taxonomies {
-  US_GAAP
-  DEI
+  us_gaap
+  dei
 }
