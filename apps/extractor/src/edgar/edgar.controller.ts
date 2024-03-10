@@ -5,9 +5,14 @@ import { EdgarService } from './edgar.service';
 export class EdgarController {
   constructor(private edgarService: EdgarService) {}
 
-  @Get()
-  async getHoldings() {
-    return this.edgarService.getHoldings();
+  @Get('/stocks')
+  async getStocksList() {
+    return this.edgarService.getStocksList();
+  }
+
+  @Get('/stocks/:symbol')
+  async getStockBySymbol(@Param('symbol') symbol: string) {
+    return this.edgarService.getStock(symbol);
   }
 
   @Post('insert/facts/:symbol')
