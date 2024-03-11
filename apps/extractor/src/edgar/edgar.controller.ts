@@ -15,6 +15,11 @@ export class EdgarController {
     return this.edgarService.getStock(symbol);
   }
 
+  @Get('/facts/:name')
+  async getFact(@Param('name') name: string) {
+    return this.edgarService.getFact(name);
+  }
+
   @Post('insert/facts/:symbol')
   async insertSymbolFacts(@Param('symbol') symbol: string) {
     return this.edgarService.insertSymbolFacts(symbol);

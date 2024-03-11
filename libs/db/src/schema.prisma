@@ -23,14 +23,12 @@ model stocks {
 model facts {
   id String @id @default(uuid()) @db.Uuid
 
-  stock    stocks @relation(fields: [stock_id], references: [id])
-  stock_id String @db.Uuid
-
-  name        String  @unique
+  name        String     @unique
   label       String?
   description String?
+  taxonomy    taxonomies
 
-  taxonomy taxonomies
+  stocks stocks[]
 }
 
 enum taxonomies {

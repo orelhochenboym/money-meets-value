@@ -3,7 +3,7 @@ import {
   CompanyTickersExchangeSchema,
 } from '@money-meets-value/types';
 import { Injectable } from '@nestjs/common';
-import { taxonomies } from '@prisma/client';
+import { Prisma, taxonomies } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { zodFetch } from '../zod-fetch';
 
@@ -30,11 +30,8 @@ export class EdgarService {
       companies.fields.forEach((field, i) => {
         const value = company[i];
 
-        if (field === 'cik') {
-          formattedCompany[field] = value && value.toString().padStart(10, '0');
-        } else {
-          formattedCompany[field] = value;
-        }
+        formattedCompany[field] =
+          field === 'cik' && value ? value.toString().padStart(10, '0') : value;
       });
 
       return formattedCompany;
@@ -76,21 +73,13 @@ export class EdgarService {
       CompanyFactsSchema,
     );
 
-    // find or create a stock in db
-    const stock = await this.prisma.stocks.upsert({
-      where: { symbol },
-      create: { symbol },
-      update: {},
-    });
-
     // prepare data to insert into db
     const facts = Object.entries(data.facts)
       .map(([key, taxonomyFacts]) => {
         const facts = Object.entries(taxonomyFacts).map(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          ([name, { units, ...fact }]) => {
+          ([name, { units, ...fact }]): Prisma.factsCreateInput => {
             return {
-              stock_id: stock.id,
               taxonomy:
                 key === taxonomies.dei ? taxonomies.dei : taxonomies.us_gaap,
               name,
@@ -105,17 +94,44 @@ export class EdgarService {
         return acc.concat(curr);
       });
 
+    // find or create a stock in db
+    const stock = await this.prisma.stocks.upsert({
+      where: { symbol },
+      create: { symbol },
+      update: {},
+    });
+
     // find or create data in db
     const factsInDb = await Promise.all(
       facts.map(({ name, ...fact }) => {
         return this.prisma.facts.upsert({
           where: { name },
-          create: { name, ...fact },
-          update: {},
+          create: {
+            name,
+            ...fact,
+            stocks: {
+              connect: { id: stock.id },
+            },
+          },
+          update: {
+            stocks: {
+              connect: { id: stock.id },
+            },
+          },
+          include: { stocks: true },
         });
       }),
     );
 
     return factsInDb;
+  }
+
+  async getFact(name: string) {
+    const fact = await this.prisma.facts.findMany({
+      where: { name },
+      include: { stocks: true },
+    });
+
+    return fact;
   }
 }
