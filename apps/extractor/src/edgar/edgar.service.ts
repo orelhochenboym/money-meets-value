@@ -94,15 +94,8 @@ export class EdgarService {
         return acc.concat(curr);
       });
 
-    // find or create a stock in db
-    const stock = await this.prisma.stocks.upsert({
-      where: { symbol },
-      create: { symbol },
-      update: {},
-    });
-
     // find or create data in db
-    const factsInDb = await Promise.all(
+    const factsInDb = await this.prisma.$transaction(
       facts.map(({ name, ...fact }) => {
         return this.prisma.facts.upsert({
           where: { name },
@@ -110,12 +103,12 @@ export class EdgarService {
             name,
             ...fact,
             stocks: {
-              connect: { id: stock.id },
+              connectOrCreate: { where: { symbol }, create: { symbol } },
             },
           },
           update: {
             stocks: {
-              connect: { id: stock.id },
+              connectOrCreate: { where: { symbol }, create: { symbol } },
             },
           },
           include: { stocks: true },
